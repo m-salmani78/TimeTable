@@ -2,6 +2,7 @@ package com.example.timetable.ui.main;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -21,12 +22,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-
-        return PlaceholderFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                return PlaceholderFragment.newInstance(position + 1);
+            case 1:
+                return PlaceholderFragment.newInstance(2);
+            case 2:
+                return PlaceholderFragment.newInstance(3);
+            default:
+                return PlaceholderFragment.newInstance(0);
+        }
     }
 
     @Nullable

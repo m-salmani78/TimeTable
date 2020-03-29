@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +14,7 @@
         android:layout_margin="@dimen/small_margin">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:orientation="vertical">
@@ -32,33 +31,58 @@
                 android:maxLines="1" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginBottom="@dimen/small_margin"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/normal_margin"
+                android:paddingRight="@dimen/normal_margin">
 
-                <EditText
-                    android:id="@+id/editText6"
+                <TextView
+                    android:id="@+id/textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin"
                     android:layout_weight="1"
-                    android:background="@drawable/edit_text_background"
-                    android:ems="6"
-                    android:gravity="center"
-                    android:hint="-- / -- / --"
-                    android:inputType="date" />
+                    android:text="@string/time"
+                    android:textSize="@dimen/normal_font_size" />
 
                 <EditText
-                    android:id="@+id/time"
+                    android:id="@+id/range_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_margin"
-                    android:layout_weight="1"
-                    android:background="@drawable/edit_text_background"
-                    android:ems="6"
+                    android:layout_weight="2"
+                    android:focusable="false"
                     android:gravity="center"
-                    android:hint="@string/time"
-                    android:inputType="time" />
+                    android:hint="00 : 00"
+                    android:textSize="@dimen/normal_font_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/normal_margin"
+                android:paddingRight="@dimen/normal_margin">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/date"
+                    android:textSize="@dimen/normal_font_size" />
+
+                <EditText
+                    android:id="@+id/date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:hint="--/--/--"
+                    android:textSize="@dimen/normal_font_size" />
             </LinearLayout>
 
             <EditText
@@ -80,11 +104,9 @@
         android:id="@+id/confirm_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="confirm"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/confirm"
         android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="@dimen/large_font_size"
-        />
+        android:textSize="@dimen/large_font_size" />
 </RelativeLayout>
