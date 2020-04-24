@@ -15,6 +15,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
+    private static final Fragment[] pageInstances = new Fragment[]{
+            PlaceholderFragment.newInstance(1), ScheduleFragment.newInstance(), PlaceholderFragment.newInstance(3)
+    };
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -25,16 +28,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return PlaceholderFragment.newInstance(position + 1);
-            case 1:
-                return PlaceholderFragment.newInstance(2);
-            case 2:
-                return PlaceholderFragment.newInstance(3);
-            default:
-                return PlaceholderFragment.newInstance(0);
-        }
+        return pageInstances[position];
     }
 
     @Nullable
@@ -46,5 +40,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 3;
+    }
+
+    public static Fragment getPageInstance(int position) {
+        return pageInstances[position];
     }
 }

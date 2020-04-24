@@ -4,6 +4,9 @@
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="corner">4dp</dimen>
+    <dimen name="from_scale">32dp</dimen>
+    <dimen name="to_scale">16dp</dimen>
+    <dimen name="height">32dp</dimen>
 
     <!-- font size-->
     <dimen name="large_font_size">20sp</dimen>

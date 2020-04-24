@@ -5,23 +5,22 @@ import java.sql.Time;
 public class Item {
     private boolean done = false;
     private String subject, comment;
-    private Time time;
+    private Time timeBegin,timeEnd;
     private Week week;
 
     public enum Week {
-        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
     }
-    Item() {
+    public Item() {
         subject = "";
         comment = "";
-        time = new Time(0L);
+        timeBegin = new Time(0L);
     }
-
     public Item(boolean done, String subject, String comment, Time time, Week week) {
         this.done = done;
         this.subject = subject;
         this.comment = comment;
-        this.time = time;
+        this.timeBegin = time;
         this.week = week;
     }
 
@@ -49,12 +48,12 @@ public class Item {
         this.comment = comment;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getTimeBegin() {
+        return timeBegin;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setTimeBegin(Time timeBegin) {
+        this.timeBegin = timeBegin;
     }
 
     public Week getWeek() {
@@ -63,5 +62,13 @@ public class Item {
 
     public void setWeek(Week week) {
         this.week = week;
+    }
+
+    public Time getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(Time timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }

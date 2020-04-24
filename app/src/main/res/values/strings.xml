@@ -4,10 +4,21 @@
 
     <string name="subject">Subject</string>
     <string name="comment">Comment</string>
-    <string name="time">Time</string>
+    <string name="timeBegin">Time</string>
+    <string name="until">to</string>
     <string name="date">Date</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
     <string name="confirm">confirm</string>
+
+    <!-- weather info -->
+    <string name="weather_info">Weather Info</string>
+    <string name="name_txt">name:</string>
+    <string name="temp">temp:</string>
+    <string name="min_temp">min temp:</string>
+    <string name="max_temp">max temp:</string>
+    <string name="description">description:</string>
+    <string name="humidity">humidity:</string>
+    <string name="pressure">pressure:</string>
 </resources>

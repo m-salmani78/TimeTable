@@ -1,40 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/small_margin"
     android:layout_margin="4dp"
-    android:background="@drawable/edit_text_background">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/item_cb_header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:textSize="@dimen/normal_font_size"
-            tools:text="CheckBox" />
+        android:layout_alignBottom="@id/radio_group"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/radio_group"
+        android:background="@drawable/edit_text_background"
+        android:orientation="vertical"
+        android:padding="@dimen/small_margin">
 
         <TextView
-            android:id="@+id/item_date"
-            android:layout_width="0dp"
+            android:id="@+id/item_cb_header"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="1399 / 01 / 07" />
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/normal_font_size"
+            android:textStyle="bold"
+            tools:text="@string/subject" />
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/item_date"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            tools:text="1399 / 01 / 07" />-->
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginRight="@dimen/small_margin"
+            android:maxLines="3"
+            android:textSize="@dimen/small_font_size"
+            tools:text="descriptions" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/item_title"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/small_margin"
-        android:layout_marginRight="@dimen/small_margin"
-        android:textSize="@dimen/small_font_size"
-        tools:text="TextView" />
-</LinearLayout>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:padding="4dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioButton_done"
+            style="@style/RadioButtonStyle"
+            android:background="@drawable/radio_btn_selector_done" />
+
+        <RadioButton
+            android:id="@+id/radioButton_undone"
+            android:layout_height="32dp"
+            style="@style/RadioButtonStyle"
+            android:background="@drawable/radio_btn_selector_undone" />
+    </RadioGroup>
+
+</RelativeLayout>
