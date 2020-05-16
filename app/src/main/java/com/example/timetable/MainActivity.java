@@ -3,8 +3,8 @@ package com.example.timetable;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.timetable.todoList.Item;
-import com.example.timetable.ui.main.PlaceholderFragment;
+import com.example.timetable.datamodel.Item;
+import com.example.timetable.ui.main.ReminderListFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -13,7 +13,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.timetable.ui.main.SectionsPagerAdapter;
 
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(MainActivity.this, AddActivity.class);
-//                    Bundle bundle = new Bundle();
                     startActivityForResult(intent, RQ_CODE_ADD_ACTIVITY);
                 }
             });
@@ -75,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RQ_CODE_ADD_ACTIVITY && resultCode == RESULT_OK) {
-            Item newItem = new Item();
+            Item newItem = new Item(-1);
             newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
             newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
-            newItem.setTimeEnd(Time.valueOf(data.getStringExtra(AddActivity.END_TIME_TEXT) + ":00"));
+//            newItem.setDuration(Time.valueOf(data.getStringExtra(AddActivity.END_TIME_TEXT) + ":00"));
             newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
-            ((PlaceholderFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
+            ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
         }
     }
 }

@@ -16,7 +16,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3};
     private static final Fragment[] pageInstances = new Fragment[]{
-            PlaceholderFragment.newInstance(1), ScheduleFragment.newInstance(), PlaceholderFragment.newInstance(3)
+            ReminderListFragment.newInstance(1), WeatherInfoFragment.newInstance(), GalleryFragment.newInstance()
     };
     private final Context mContext;
 

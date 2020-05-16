@@ -16,8 +16,8 @@ import com.example.timetable.ApiService;
 import com.example.timetable.R;
 import com.example.timetable.datamodel.WeatherInfo;
 
-public class ScheduleFragment extends Fragment implements ApiService.OnWeatherInfoReceived {
-    public static String TAG = "ScheduleFragment";
+public class WeatherInfoFragment extends Fragment implements ApiService.OnWeatherInfoReceived {
+    public static String TAG = "WeatherInfoFragment";
     private View root;
 
     private Button requestButton;
@@ -25,10 +25,10 @@ public class ScheduleFragment extends Fragment implements ApiService.OnWeatherIn
     private LinearLayout weatherInfoLayout;
     private View progressBar, noConnection;
 
-    public static ScheduleFragment newInstance() {
+    public static WeatherInfoFragment newInstance() {
 
         Bundle args = new Bundle();
-        ScheduleFragment fragment = new ScheduleFragment();
+        WeatherInfoFragment fragment = new WeatherInfoFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,7 +36,7 @@ public class ScheduleFragment extends Fragment implements ApiService.OnWeatherIn
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_schedule, container, false);
+        root = inflater.inflate(R.layout.fragment_weather_info, container, false);
         requestButton = root.findViewById(R.id.request_btn);
         progressBar = root.findViewById(R.id.progressBar);
         noConnection = root.findViewById(R.id.no_connection_img);
@@ -48,7 +48,7 @@ public class ScheduleFragment extends Fragment implements ApiService.OnWeatherIn
                 weatherInfoLayout.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 ApiService apiService = new ApiService(getContext());
-                apiService.getCurrentWeather(ScheduleFragment.this);
+                apiService.getCurrentWeather(WeatherInfoFragment.this);
             }
         });
         return root;

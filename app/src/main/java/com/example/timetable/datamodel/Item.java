@@ -1,34 +1,45 @@
-package com.example.timetable.todoList;
+package com.example.timetable.datamodel;
 
 import java.sql.Time;
 
 public class Item {
-    private boolean done = false;
+    private int done = -1, duration, id;
     private String subject, comment;
-    private Time timeBegin,timeEnd;
+    private Time timeBegin;
     private Week week;
 
     public enum Week {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
     }
-    public Item() {
+
+    public Item(int id) {
+        this.id = id;
         subject = "";
         comment = "";
         timeBegin = new Time(0L);
     }
-    public Item(boolean done, String subject, String comment, Time time, Week week) {
-        this.done = done;
+
+    public Item(int id, String subject, String comment, Time time, Week week) {
+        this.id = id;
         this.subject = subject;
         this.comment = comment;
         this.timeBegin = time;
         this.week = week;
     }
 
-    public boolean isDone() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int isDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(int done) {
         this.done = done;
     }
 
@@ -64,11 +75,11 @@ public class Item {
         this.week = week;
     }
 
-    public Time getTimeEnd() {
-        return timeEnd;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setTimeEnd(Time timeEnd) {
-        this.timeEnd = timeEnd;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }
