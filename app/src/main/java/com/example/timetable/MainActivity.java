@@ -9,6 +9,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //tabs
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+        setupToolbar();
 
         //fab
         final FloatingActionButton fab = findViewById(R.id.fab);
@@ -81,4 +84,14 @@ public class MainActivity extends AppCompatActivity {
             ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
         }
     }
+
+    private void setupToolbar(){
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+    }
+
 }

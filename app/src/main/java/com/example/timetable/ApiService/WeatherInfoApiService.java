@@ -1,4 +1,4 @@
-package com.example.timetable;
+package com.example.timetable.ApiService;
 
 import android.content.Context;
 import android.util.Log;
@@ -16,17 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ApiService {
-    private static final String TAG = "ApiService";
-    private static final String WEATHER_API_URL =
-            "http://api.openweathermap.org/data/2.5/weather?q=Yazd,Ir&appid=5cd7c03d20e6f4a356a1adad6dcfbbfe";
-    Context context;
+public class WeatherInfoApiService {
+    private static final String TAG = "WeatherInfoApiService";
+    private Context context;
 
-    public ApiService(Context context) {
+    public WeatherInfoApiService(Context context) {
         this.context = context;
     }
 
-    public void getCurrentWeather(final OnWeatherInfoReceived weatherInfoReceived, final String city, String state) {
+    private void getCurrentWeather(final OnWeatherInfoReceived weatherInfoReceived, final String city, String state) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 "http://api.openweathermap.org/data/2.5/weather?q=" + city +
                         "," + state + "&appid=5cd7c03d20e6f4a356a1adad6dcfbbfe",
@@ -46,7 +44,7 @@ public class ApiService {
         request.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
-                return 8000;
+                return 4000;
             }
 
             @Override
@@ -55,7 +53,7 @@ public class ApiService {
             }
 
             @Override
-            public void retry(VolleyError error) throws VolleyError {
+            public void retry(VolleyError error) {
 
             }
         });
@@ -67,7 +65,7 @@ public class ApiService {
         getCurrentWeather(weatherInfoReceived, "Yazd", "Ir");
     }
 
-    public WeatherInfo parseResponseToWeatherInfo(JSONObject response, String city) {
+    private WeatherInfo parseResponseToWeatherInfo(JSONObject response, String city) {
         WeatherInfo weatherInfo = new WeatherInfo(city);
         try {
             JSONArray weatherJsonArray = response.getJSONArray("weather");
@@ -93,4 +91,5 @@ public class ApiService {
 
         void onError();
     }
+
 }

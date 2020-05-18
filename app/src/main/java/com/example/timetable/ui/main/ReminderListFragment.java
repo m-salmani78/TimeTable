@@ -11,21 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timetable.R;
-import com.example.timetable.todoList.Item;
+import com.example.timetable.todoList.ReminderDatabaseOpenHelper;
+import com.example.timetable.datamodel.Item;
 import com.example.timetable.todoList.ItemListAdaptor;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceholderFragment extends Fragment {
-
+public class ReminderListFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private List<Item> items = new ArrayList<>();
     private ItemListAdaptor listAdaptor;
+    private ReminderDatabaseOpenHelper databaseOpenHelper;
 
-    public static PlaceholderFragment newInstance(int index) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static ReminderListFragment newInstance(int index) {
+        ReminderListFragment fragment = new ReminderListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -35,28 +35,25 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseOpenHelper = new ReminderDatabaseOpenHelper(getContext());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_page1, container, false);
+        View root = inflater.inflate(R.layout.fragment_reminder_list, container, false);
 
         //recycler view
-        for (int i = 0; i < 5; i++) {
-            Item item = new Item(false, "mahdi " + i, "szfihlsdsfljbs", new Time(i), Item.Week.FRIDAY);
-            items.add(item);
-        }
         RecyclerView recyclerView = root.findViewById(R.id.recycle_view);
-        listAdaptor = new ItemListAdaptor(items, getContext());
+        listAdaptor = new ItemListAdaptor(databaseOpenHelper.getItems(items), getContext(), databaseOpenHelper);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(listAdaptor);
 
         return root;
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item) {
+        item.setId((int) databaseOpenHelper.addItem(item));
         items.add(item);
         listAdaptor.notifyDataSetChanged();
     }
-
 }

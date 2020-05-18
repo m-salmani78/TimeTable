@@ -12,16 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.timetable.R;
+import com.example.timetable.datamodel.Item;
 
 import java.util.List;
 
 public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemViewHolder> {
     private List<Item> items;
     private Context context;
+    private ReminderDatabaseOpenHelper databaseOpenHelper;
 
-    public ItemListAdaptor(List<Item> items, Context context) {
+    public ItemListAdaptor(List<Item> items, Context context, ReminderDatabaseOpenHelper databaseOpenHelper) {
         this.items = items;
         this.context = context;
+        this.databaseOpenHelper = databaseOpenHelper;
     }
 
     @NonNull
@@ -32,25 +35,39 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
-        Item item = items.get(position);
+    public void onBindViewHolder(@NonNull final ItemViewHolder holder, final int position) {
+        final Item item = items.get(position);
         holder.subject_txt.setText(item.getSubject());
         holder.title.setText(item.getComment());
+        if (item.isDone() == 1){
+            holder.rd_btn_done.setChecked(true);
+            checkAnimate(holder.rd_btn_done,holder.rd_btn_undone);
+        }else if(item.isDone() == 0){
+            holder.rd_btn_undone.setChecked(true);
+            checkAnimate(holder.rd_btn_undone,holder.rd_btn_done);
+        }
+
         holder.rd_btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.rd_btn_done.animate().scaleY(1.1f).scaleX(1.1f).setDuration(200);
-                holder.rd_btn_undone.animate().scaleY(0.9f).scaleX(0.9f).setDuration(200);
+                checkAnimate(holder.rd_btn_done,holder.rd_btn_undone);
+                databaseOpenHelper.setIsDone(item.getId(), 1);
+
             }
         });
         holder.rd_btn_undone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.rd_btn_undone.animate().scaleY(1.1f).scaleX(1.1f).setDuration(200);
-                holder.rd_btn_done.animate().scaleY(0.9f).scaleX(0.9f).setDuration(200);
+                checkAnimate(holder.rd_btn_undone,holder.rd_btn_done);
+                databaseOpenHelper.setIsDone(item.getId(), 0);
             }
         });
 //        holder.date.setText(item.getWeek().toString());
+    }
+
+    private void checkAnimate(View checked,View unChecked){
+        checked.animate().scaleY(1.1f).scaleX(1.1f).setDuration(200);
+        unChecked.animate().scaleY(0.9f).scaleX(0.9f).setDuration(200);
     }
 
     @Override
@@ -63,16 +80,16 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
         TextView subject_txt;
         TextView date;
         RadioGroup radioGroup;
-        RadioButton rd_btn_done,rd_btn_undone;
+        RadioButton rd_btn_done, rd_btn_undone;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.item_title);
 //            date=itemView.findViewById(R.id.item_date);
             subject_txt = itemView.findViewById(R.id.item_cb_header);
-            radioGroup=itemView.findViewById(R.id.radio_group);
-            rd_btn_done=itemView.findViewById(R.id.radioButton_done);
-            rd_btn_undone=itemView.findViewById(R.id.radioButton_undone);
+            radioGroup = itemView.findViewById(R.id.radio_group);
+            rd_btn_done = itemView.findViewById(R.id.radioButton_done);
+            rd_btn_undone = itemView.findViewById(R.id.radioButton_undone);
         }
     }
 }

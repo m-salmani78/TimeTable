@@ -12,4 +12,6 @@
     <dimen name="large_font_size">20sp</dimen>
     <dimen name="normal_font_size">16sp</dimen>
     <dimen name="small_font_size">14sp</dimen>
+    <dimen name="card_corner_redious">6dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
 </resources>
