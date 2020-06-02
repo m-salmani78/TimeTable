@@ -1,15 +1,19 @@
 package com.example.timetable.ApiService;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
+import com.example.timetable.R;
 import com.example.timetable.datamodel.AppFeature;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -21,23 +25,26 @@ public class DownloadImageTask extends AsyncTask<Void, Integer, Void> {
     private Context context;
     private OnImageDownload onImageDownload;
     private List<AppFeature> appFeatures;
-    private ProgressDialog progressDialog;
+    private ProgressBar progressBar;
+    private ProgressBar linearProgress;
+    private FloatingActionButton fab;
 
-    public DownloadImageTask(Context context, OnImageDownload onImageDownload, @NonNull List<AppFeature> appFeatures) {
+    public DownloadImageTask(Context context, OnImageDownload onImageDownload
+            , @NonNull List<AppFeature> appFeatures, View root) {
         this.context = context;
         this.onImageDownload = onImageDownload;
         this.appFeatures = appFeatures;
+        fab=root.findViewById(R.id.download_fab);
+        progressBar=root.findViewById(R.id.progressBar2);
+        linearProgress=root.findViewById(R.id.linearProgressBar);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle("ذخیره سازی عکس ها");
-        progressDialog.setMessage("لطفا منتظر بمانید");
-        progressDialog.setIndeterminate(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.show();
+        fab.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        linearProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -69,17 +76,21 @@ public class DownloadImageTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        progressDialog.hide();
-        onImageDownload.onReceived(0);
+        Animation animation=AnimationUtils.loadAnimation(context,R.anim.progress_bar_animation);
+        fab.startAnimation(animation);
+        fab.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        onImageDownload.onReceived();
+        linearProgress.setVisibility(View.GONE);
     }
 
     @Override
     protected void onProgressUpdate(Integer... percent) {
         super.onProgressUpdate(percent);
-        progressDialog.setProgress(percent[0]);
+        linearProgress.setProgress(percent[0]);
     }
 
     public interface OnImageDownload {
-        void onReceived(int position);
+        void onReceived();
     }
 }

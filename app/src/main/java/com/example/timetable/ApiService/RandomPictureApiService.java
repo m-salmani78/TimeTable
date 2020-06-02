@@ -32,7 +32,7 @@ public class RandomPictureApiService {
     }
 
     public void getPicturesFromServer(final OnPicturesReceived picturesReceived, int page, int limit) {
-        if(page<0){
+        if (page < 0) {
             Toast.makeText(context, "choose the page number", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -74,10 +74,11 @@ public class RandomPictureApiService {
 
     public List<AppFeature> parseResponseToAppFeature(JSONArray response) {
         List<AppFeature> appFeatures = new ArrayList<>();
-        try {
-            for (int i = 0; i < limit; i++) {
-                AppFeature appFeature = new AppFeature();
+
+        for (int i = 0; i < limit; i++) {
+            try {
                 JSONObject object = response.getJSONObject(i);
+                AppFeature appFeature = new AppFeature();
                 appFeature.setId(object.getInt("id"));
                 appFeature.setTitle(object.getString("author"));
                 String downloadUrl = object.getString("download_url");
@@ -85,15 +86,15 @@ public class RandomPictureApiService {
                 downloadUrl = downloadUrl.substring(0, downloadUrl.lastIndexOf("/"));
                 appFeature.setImageUrl(downloadUrl + "/450/300");
                 appFeature.setAuthorPageUrl(object.getString("url"));
-                //...
+                
                 appFeatures.add(appFeature);
+            } catch (JSONException e) {
+                Log.e(TAG, "parseResponseToPicture: error"+i);
             }
-            Log.i(TAG, "parseResponseToPicture: successfully parsed");
-            return appFeatures;
-        } catch (JSONException e) {
-            Log.e(TAG, "parseResponseToPicture: error");
-            return null;
         }
+        Log.i(TAG, "parseResponseToPicture: successfully parsed");
+        return appFeatures;
+
     }
 
     public interface OnPicturesReceived {

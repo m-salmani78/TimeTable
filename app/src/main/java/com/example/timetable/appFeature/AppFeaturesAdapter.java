@@ -1,6 +1,7 @@
 package com.example.timetable.appFeature;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -18,6 +19,9 @@ import com.example.timetable.datamodel.AppFeature;
 
 import java.io.File;
 import java.util.List;
+
+import static com.example.timetable.ui.main.GalleryFragment.KEY_PAGE_NUM;
+import static com.example.timetable.ui.main.GalleryFragment.SHARED_PREF_NAME;
 
 public class AppFeaturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "AppFeaturesAdapter";
@@ -61,13 +65,15 @@ public class AppFeaturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    appFeatures.get(position).goToAuthorWebPage(context);
+                    appFeatures.get(position).goToAuthorPage(context);
                 }
             });
         } else {
             HeaderViewHolder headerView = (HeaderViewHolder) holder;
-            headerView.pageNumEdTxt.setText("2");
-            headerView.limitEdTxt.setText("10");
+            SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            int page = sharedPreferences.getInt(KEY_PAGE_NUM, 0);
+            headerView.pageNumEdTxt.setText(page + "");
+            headerView.limitEdTxt.setText((getItemCount() - 1) + "");
         }
     }
 
