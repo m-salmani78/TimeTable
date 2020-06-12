@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.timetable.ApiService.DownloadImageTask;
 import com.example.timetable.ApiService.RandomPictureApiService;
 import com.example.timetable.R;
@@ -39,9 +39,12 @@ public class GalleryFragment extends Fragment implements RandomPictureApiService
     private RandomPictureApiService pictureApiService;
     private AppFeatureDatabaseOpenHelper databaseOpenHelper;
     private EditText limitationEdTxt, pageNumEdTxt;
+    private View root;
+    private FloatingActionButton fab;
+
     private SharedPreferences sharedPreferences;
-    private static final String SHARED_PREF_NAME = "app_feature_shared_pref";
-    private static final String KEY_PAGE_NUM = "key_page_num";
+    public static final String SHARED_PREF_NAME = "app_feature_shared_pref";
+    public static final String KEY_PAGE_NUM = "key_page_num";
     private static final String KEY_LIMIT = "key_limitation";
 
 
@@ -53,10 +56,10 @@ public class GalleryFragment extends Fragment implements RandomPictureApiService
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        root = inflater.inflate(R.layout.fragment_gallery, container, false);
         sharedPreferences = getContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        FloatingActionButton fab = root.findViewById(R.id.download_fab);
+        fab = root.findViewById(R.id.download_fab);
         pageNumEdTxt = root.findViewById(R.id.page_ed_txt);
         limitationEdTxt = root.findViewById(R.id.limitation_ed_txt);
 
@@ -109,6 +112,7 @@ public class GalleryFragment extends Fragment implements RandomPictureApiService
         try {
             return Integer.parseInt(pageNumEdTxt.getText().toString().trim());
         } catch (NumberFormatException e) {
+            YoYo.with(Techniques.Shake).duration(500).playOn(pageNumEdTxt);
             return -1;
         }
     }
@@ -126,11 +130,11 @@ public class GalleryFragment extends Fragment implements RandomPictureApiService
         appFeatures.clear();
         DownloadImageTask downloadImageTask = new DownloadImageTask(getContext(), new DownloadImageTask.OnImageDownload() {
             @Override
-            public void onReceived(int position) {
+            public void onReceived() {
                 appFeatures.addAll(list);
                 appFeaturesAdapter.notifyDataSetChanged();
             }
-        }, list);
+        }, list, root);
 
         downloadImageTask.execute();
         databaseOpenHelper.addItems(list, getPageNum());

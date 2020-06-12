@@ -1,6 +1,7 @@
 package com.example.timetable;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
@@ -13,18 +14,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.Calendar;
 
 
 public class AddActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, View.OnClickListener {
     public static final String SUBJECT_TEXT = "subject";
     public static final String START_TIME_TEXT = "beginning time";
-    public static final String END_TIME_TEXT = "end time";
+    public static final String TIME_DURATION = "time duration";
     public static final String COMMENT_TEXT = "comment";
-    EditText beginningTime, endTime, subject, comment;
+    EditText beginningTime, timeDuration, subject, comment;
     Button confirm_btn;
     Calendar now;
-    int hourBegin, minuteBegin, hourEnd, minuteEnd;
+    int hourBegin, minuteBegin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +36,22 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         setContentView(R.layout.activity_add);
         subject = findViewById(R.id.subject_ed_txt);
         comment = findViewById(R.id.comment_ed_txt);
+        beginningTime = findViewById(R.id.beginning_time);
+        timeDuration = findViewById(R.id.end_time);
+        confirm_btn = findViewById(R.id.confirm_btn);
+
+        //actionbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
         //time set
         now = Calendar.getInstance();
         hourBegin = now.get(Calendar.HOUR_OF_DAY);
-        hourEnd = hourBegin + 1;
-        minuteBegin = minuteEnd = now.get(Calendar.MINUTE);
-        beginningTime = findViewById(R.id.beginning_time);
-        endTime = findViewById(R.id.end_time);
+        minuteBegin = now.get(Calendar.MINUTE);
         beginningTime.setOnClickListener(this);
+
         //confirm data
-        confirm_btn = findViewById(R.id.confirm_btn);
         confirm_btn.setOnClickListener(this);
     }
 
@@ -52,7 +62,6 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         minuteBegin = timePicker.getMinute();
         String time = ((hourBegin < 10) ? "0" : "") + hourBegin + ":" + ((minuteBegin < 10) ? "0" : "") + minuteBegin;
         beginningTime.setText(time);
-        endTime.setText(time);
     }
 
     @Override
@@ -66,32 +75,51 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
                     public void onCancel(DialogInterface dialogInterface) {
                         now = Calendar.getInstance();
                         hourBegin = now.get(Calendar.HOUR_OF_DAY);
-                        hourEnd = hourBegin + 1;
-                        minuteBegin = minuteEnd = now.get(Calendar.MINUTE);
+                        minuteBegin = now.get(Calendar.MINUTE);
                         beginningTime.setText("");
                     }
                 });
                 timePickerDialog.show();
+                break;
             case R.id.confirm_btn:
                 try {
                     if (beginningTime.getText().toString().trim().length() == 0 ||
                             subject.getText().toString().trim().length() <= 3 ||
-                            endTime.getText().toString().trim().length() == 0)
+                            timeDuration.getText().toString().trim().length() == 0) {
                         throw new RuntimeException();
+                    }
                     Intent intent = new Intent();
                     intent.putExtra(SUBJECT_TEXT, subject.getText().toString().trim());
-                    intent.putExtra(START_TIME_TEXT, beginningTime.getText().toString().trim());
-                    intent.putExtra(END_TIME_TEXT, endTime.getText().toString().trim());
+                    intent.putExtra(START_TIME_TEXT, beginningTime.getText().toString());
+                    intent.putExtra(TIME_DURATION, Integer.parseInt(timeDuration.getText().toString()));
                     intent.putExtra(COMMENT_TEXT, comment.getText().toString().trim());
                     setResult(RESULT_OK, intent);
                     finish();
-                } catch (RuntimeException e){
-                warning();
-            }
+                } catch (RuntimeException e) {
+                    warning();
+                    break;
+                }
         }
     }
 
     private void warning() {
-        //TODO
+        if (beginningTime.getText().toString().trim().length() == 0) {
+            YoYo.with(Techniques.Shake).duration(500).playOn(beginningTime);
+            beginningTime.setError(getResources().getString(R.string.warning_time));
+        }
+        if (timeDuration.getText().toString().trim().length() == 0) {
+            YoYo.with(Techniques.Shake).duration(500).playOn(timeDuration);
+            timeDuration.setError(getResources().getString(R.string.warning_duration));
+        }
+        if (subject.getText().toString().trim().length() <= 3) {
+            YoYo.with(Techniques.Shake).duration(500).playOn(subject);
+            subject.setError(getResources().getString(R.string.warning_subject));
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

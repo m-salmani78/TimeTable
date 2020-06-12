@@ -10,13 +10,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFF"
         android:elevation="4dp"
         android:theme="@style/AppTheme.LightAppBarOverlay">
 
-            <LinearLayout
+
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFF"
+
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/small_margin"
@@ -24,22 +26,37 @@
                 android:paddingRight="@dimen/small_margin"
                 android:paddingBottom="4dp">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/download_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_file_download_white_24dp" />
 
-                <TextView
+            <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                <ProgressBar
+                        android:id="@+id/progressBar2"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="invisible"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/download_fab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fabSize="mini"
+                        android:layout_gravity="center"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/ic_file_download_white_24dp" />
+            </FrameLayout>
+
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="page:" />
 
-                <EditText
+            <EditText
                     android:id="@+id/page_ed_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,14 +66,14 @@
                     android:inputType="number"
                     android:maxLength="2" />
 
-                <TextView
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="limit:" />
 
-                <EditText
+            <EditText
                     android:id="@+id/limitation_ed_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,15 +82,25 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:maxLength="2" />
-            </LinearLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/linearProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_marginLeft="@dimen/normal_margin"
+            android:layout_marginRight="@dimen/normal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/image_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:padding="4dp" />
-
+        android:paddingRight="4dp"
+        android:paddingLeft="4dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,12 +14,14 @@ import androidx.fragment.app.Fragment;
 import com.example.timetable.ApiService.WeatherInfoApiService;
 import com.example.timetable.R;
 import com.example.timetable.datamodel.WeatherInfo;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class WeatherInfoFragment extends Fragment implements WeatherInfoApiService.OnWeatherInfoReceived {
     public static String TAG = "WeatherInfoFragment";
     private View root;
 
-    private Button requestButton;
+//    private Button requestFab;
+    private FloatingActionButton requestFab;
     private LinearLayout weatherInfoLayout;
     private View progressBar, noConnection;
 
@@ -36,11 +37,11 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_weather_info, container, false);
-        requestButton = root.findViewById(R.id.request_btn);
+        requestFab = root.findViewById(R.id.request_btn);
         progressBar = root.findViewById(R.id.progressBar);
         noConnection = root.findViewById(R.id.no_connection_img);
         weatherInfoLayout = root.findViewById(R.id.weather_info);
-        requestButton.setOnClickListener(new View.OnClickListener() {
+        requestFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 noConnection.setVisibility(View.INVISIBLE);

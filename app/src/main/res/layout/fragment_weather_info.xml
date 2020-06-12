@@ -1,37 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:layoutDirection="locale"
     tools:context=".ui.main.WeatherInfoFragment">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/small_margin"
-        android:gravity="center"
-        android:text="@string/weather_info"
-        android:textSize="@dimen/large_font_size"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/request_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/small_margin"
-        android:layout_toEndOf="@id/textView3"
-        android:text="find" />
-
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_margin="@dimen/normal_margin"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/weather_info"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/large_font_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/request_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search_green_48dp"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_weight="2"
+            android:ems="6"
+            android:gravity="center"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorHint="#ccffffff"
+            app:backgroundTint="@android:color/white" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/developer_name_txt"
+        android:layout_below="@id/linear_layout"
+        android:layout_marginLeft="@dimen/normal_margin"
+        android:layout_marginRight="@dimen/normal_margin"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/edit_text_background">
 
         <LinearLayout
@@ -39,12 +66,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:gravity="end"
                 android:orientation="vertical">
 
@@ -108,7 +135,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:gravity="start"
                 android:orientation="vertical">
 
@@ -181,9 +208,21 @@
                     tools:text="123.456" />
 
             </LinearLayout>
-
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/developer_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="1dp"
+        android:fontFamily="@font/edwardian_script"
+        android:text="@string/developer"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/normal_font_size"
+        android:textStyle="normal" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -201,15 +240,5 @@
         android:src="@drawable/ic_no_internet_connection_96"
         android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="6"
-        android:layout_margin="@dimen/normal_margin"
-        android:inputType="textPersonName"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="Name" />
 
 </RelativeLayout>

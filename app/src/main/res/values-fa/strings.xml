@@ -1,31 +1,31 @@
 <resources>
-    <string name="app_name">Toolbox</string>
-    <string name="add_activity_label">TimeTable</string>
+    <string name="app_name">جعبه ابزار</string>
+    <string name="add_activity_label">کارهای روزانه</string>
 
-    <string name="subject">Subject</string>
-    <string name="comment">Comment</string>
-    <string name="timeBegin">Time</string>
-    <string name="duration">duration</string>
-    <string name="date">Date</string>
-    <string name="confirm">confirm</string>
-    <string name="warning_subject">subject should be more than 3 char</string>
-    <string name="warning_time">specify the beginning time</string>
-    <string name="warning_duration">specify duration</string>
+    <string name="subject">موضوع</string>
+    <string name="comment">یادداشت</string>
+    <string name="timeBegin">زمان شروع</string>
+    <string name="duration">مدت زمان</string>
+    <string name="date">تاریخ</string>
+    <string name="confirm">تایید</string>
+    <string name="warning_duration">مدت زمان را مشخص کنید</string>
+    <string name="warning_subject">موضوع باید بیشتر از 3 حرف باشد</string>
+    <string name="warning_time">زمان را مشخص کنید</string>
 
     <!-- ViewPager -->
-    <string name="tab_text_1">Table</string>
-    <string name="tab_text_2">Weather</string>
-    <string name="tab_text_3">Gallery</string>
+    <string name="tab_text_1">برنامه</string>
+    <string name="tab_text_2">آب و هوا</string>
+    <string name="tab_text_3">گالری</string>
 
     <!-- weather info -->
-    <string name="weather_info">Weather Info</string>
-    <string name="name_txt">name:</string>
-    <string name="temp">temp:</string>
-    <string name="min_temp">min temp:</string>
-    <string name="max_temp">max temp:</string>
-    <string name="description">description:</string>
-    <string name="humidity">humidity:</string>
-    <string name="pressure">pressure:</string>
+    <string name="weather_info">آب و هوا</string>
+    <string name="name_txt">نام شهر:</string>
+    <string name="temp">بالاترین دما:</string>
+    <string name="min_temp">پایین ترین دما:</string>
+    <string name="max_temp">بالا ترین دما:</string>
+    <string name="description">وضعیت آسمان:</string>
+    <string name="humidity">رطوبت:</string>
+    <string name="pressure">فشار هوا:</string>
 
     <!-- AuthorPageActivity -->
     <string name="title_activity_author_page">AuthorPageActivity</string>
@@ -118,6 +118,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
-    <string name="developer" translatable="false">Developed By Mohammad Mahdi Salmani</string>
+    <string name="action_settings">تنظیمات</string>
 </resources>

@@ -9,7 +9,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +21,7 @@ import java.sql.Time;
 
 public class MainActivity extends AppCompatActivity {
     public static final int RQ_CODE_ADD_ACTIVITY = 301;
+    public FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +39,12 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
 
         //fab
-        final FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (viewPager.getCurrentItem() == 0) {
                     fab.animate().translationY(0f).scaleX(1).scaleY(1).setDuration(200L);
-                    fab.setImageResource(R.drawable.round_add_white_48);
                 }
             }
 
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -79,19 +77,17 @@ public class MainActivity extends AppCompatActivity {
             Item newItem = new Item(-1);
             newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
             newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
-//            newItem.setDuration(Time.valueOf(data.getStringExtra(AddActivity.END_TIME_TEXT) + ":00"));
+            newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
             newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
+            newItem.setDone(-1);
             ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
         }
     }
 
-    private void setupToolbar(){
-        Toolbar toolbar=findViewById(R.id.toolbar);
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.app_name);
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+//        toolbar.setTitle(R.string.app_name);
     }
 
 }

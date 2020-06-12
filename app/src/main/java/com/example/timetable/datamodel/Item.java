@@ -7,11 +7,12 @@ public class Item {
     private String subject, comment;
     private Time timeBegin;
     private Week week;
+    private boolean deleted=false;
 
     public enum Week {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
-    }
 
+    }
     public Item(int id) {
         this.id = id;
         subject = "";
@@ -81,5 +82,13 @@ public class Item {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

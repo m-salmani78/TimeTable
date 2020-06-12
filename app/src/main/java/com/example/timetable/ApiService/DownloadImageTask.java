@@ -11,6 +11,8 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.timetable.R;
 import com.example.timetable.datamodel.AppFeature;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,6 +44,7 @@ public class DownloadImageTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        YoYo.with(Techniques.ZoomOut).duration(500).playOn(fab);
         fab.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
         linearProgress.setVisibility(View.VISIBLE);
@@ -76,8 +79,7 @@ public class DownloadImageTask extends AsyncTask<Void, Integer, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Animation animation=AnimationUtils.loadAnimation(context,R.anim.progress_bar_animation);
-        fab.startAnimation(animation);
+        YoYo.with(Techniques.ZoomIn).duration(500).playOn(fab);
         fab.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         onImageDownload.onReceived();
