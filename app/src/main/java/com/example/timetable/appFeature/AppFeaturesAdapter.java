@@ -1,13 +1,16 @@
 package com.example.timetable.appFeature;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,18 +65,27 @@ public class AppFeaturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 appFeatureHolder.imageView.setImageResource(R.drawable.unload_image);
             }
             appFeatureHolder.chapterTitle.setText(appFeatures.get(position).getTitle());
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            appFeatureHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     appFeatures.get(position).goToAuthorPage(context);
+                }
+            });
+            appFeatureHolder.webPageBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(appFeatures.get(position).getAuthorPageUrl()));
+                    context.startActivity(intent);
                 }
             });
         } else {
             HeaderViewHolder headerView = (HeaderViewHolder) holder;
             SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
             int page = sharedPreferences.getInt(KEY_PAGE_NUM, 0);
-            headerView.pageNumEdTxt.setText(page + "");
-            headerView.limitEdTxt.setText((getItemCount() - 1) + "");
+            String pgStr=page+"";
+            headerView.pageNumEdTxt.setText(pgStr);
+            String countStr=(getItemCount() - 1) + "";
+            headerView.limitEdTxt.setText(countStr);
         }
     }
 
@@ -95,11 +107,14 @@ public class AppFeaturesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private class AppFeatureViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView chapterTitle;
+        private ImageButton webPageBtn, shareBtn;
 
         AppFeatureViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.feature_image_view);
             chapterTitle = itemView.findViewById(R.id.feature_title);
+            webPageBtn = itemView.findViewById(R.id.web_page_btn);
+            shareBtn = itemView.findViewById(R.id.share_btn);
         }
     }
 

@@ -6,7 +6,9 @@ import android.content.Intent;
 import com.example.timetable.AuthorPageActivity;
 
 public class AppFeature {
-
+    public static final String KEY_IMAGE_URL = "image_url";
+    public static final String KEY_IMAGE_ID = "image_id";
+    public static final String KEY_AUTHOR_NAME = "author_name";
     private int id;
     private String title;
     private String imageUrl;
@@ -60,12 +62,12 @@ public class AppFeature {
     }
 
     public void goToAuthorPage(Context context) {
-//        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(authorPageUrl));
         Intent intent = new Intent(context, AuthorPageActivity.class);
         String str = imageUrl.substring(0, imageUrl.lastIndexOf("/"));
         str = str.substring(0, imageUrl.lastIndexOf("/"));
-        intent.putExtra("image_url", str+"/600/400");
-        intent.putExtra("author_name",title);
+        intent.putExtra(KEY_IMAGE_URL, str + "/600/400");
+        intent.putExtra(KEY_IMAGE_ID, getId());
+        intent.putExtra(KEY_AUTHOR_NAME, title);
         context.startActivity(intent);
     }
 }

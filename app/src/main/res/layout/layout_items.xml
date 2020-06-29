@@ -1,26 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="6dp"
-    app:cardElevation="@dimen/card_elevation"
-    app:cardCornerRadius="@dimen/card_corner_redious">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="4dp"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <RadioButton
+            android:id="@+id/radioButton_done"
+            style="@style/RadioButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radio_btn_background_done" />
+
+        <RadioButton
+            android:id="@+id/radioButton_undone"
+            style="@style/RadioButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/radio_btn_background_undone" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/chosen_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/radio_group"
+        android:layout_alignBottom="@id/items_layout"
         android:layout_alignParentTop="true"
+        android:alpha="0.5"
+        android:background="@color/instagram_blue"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/items_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/normal_margin"
         android:layout_toStartOf="@id/radio_group"
+        android:background="@drawable/todo_list_background"
         android:orientation="vertical"
-        android:padding="@dimen/small_margin">
+        android:paddingLeft="12dp"
+        android:paddingTop="4dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/item_cb_header"
@@ -31,50 +66,50 @@
             android:textStyle="bold"
             tools:text="@string/subject" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/item_date"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            tools:text="1399 / 01 / 07" />-->
-
         <TextView
             android:id="@+id/item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/small_margin"
-            android:layout_marginRight="@dimen/small_margin"
+            android:ellipsize="end"
             android:maxLines="4"
+            android:minLines="2"
             android:textSize="@dimen/small_font_size"
             tools:text="descriptions" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_access_alarm_gray_24dp" />
+
+            <TextView
+                android:id="@+id/time_begin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/normal_margin"
+                tools:text="00:00:00" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/normal_margin"
+                app:srcCompat="@drawable/ic_timelapse_gray_24dp" />
+
+            <TextView
+                android:id="@+id/time_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_margin"
+                tools:text="-----" />
+        </LinearLayout>
+
     </LinearLayout>
 
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:orientation="vertical"
-        android:padding="4dp">
-
-        <RadioButton
-            android:id="@+id/radioButton_done"
-            style="@style/RadioButtonStyle"
-            android:background="@drawable/radio_btn_selector_done" />
-
-        <RadioButton
-            android:id="@+id/radioButton_undone"
-            style="@style/RadioButtonStyle"
-            android:layout_height="32dp"
-            android:background="@drawable/radio_btn_selector_undone" />
-    </RadioGroup>
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/radio_group"-->
-
-<!--        android:text="duration:" />-->
-
 </RelativeLayout>
-</androidx.cardview.widget.CardView>

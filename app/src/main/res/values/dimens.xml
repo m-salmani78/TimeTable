@@ -5,6 +5,7 @@
 
     <!--            -->
     <dimen name="corner">6dp</dimen>
+    <dimen name="todo_list_corner">8dp</dimen>
     <dimen name="height">32dp</dimen>
 
     <!-- font size-->

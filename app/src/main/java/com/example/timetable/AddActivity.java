@@ -9,9 +9,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -28,6 +31,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     EditText beginningTime, timeDuration, subject, comment;
     Button confirm_btn;
     Calendar now;
+    TextView remaining_words_txt;
     int hourBegin, minuteBegin;
 
     @Override
@@ -39,6 +43,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         beginningTime = findViewById(R.id.beginning_time);
         timeDuration = findViewById(R.id.end_time);
         confirm_btn = findViewById(R.id.confirm_btn);
+        remaining_words_txt = findViewById(R.id.remaining_words);
+
 
         //actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -53,6 +59,25 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
         //confirm data
         confirm_btn.setOnClickListener(this);
+
+        //update remaining words
+        comment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str = comment.getText().toString().length() + "/" + 100;
+                remaining_words_txt.setText(str);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

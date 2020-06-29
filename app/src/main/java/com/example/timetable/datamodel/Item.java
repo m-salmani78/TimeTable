@@ -3,7 +3,7 @@ package com.example.timetable.datamodel;
 import java.sql.Time;
 
 public class Item {
-    private int done = -1, duration, id;
+    private int done, duration, id;
     private String subject, comment;
     private Time timeBegin;
     private Week week;

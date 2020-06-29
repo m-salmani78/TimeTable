@@ -23,5 +23,10 @@
         <item name="android:button">@null</item>
     </style>
 
+    <style name="CheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:text">@null</item>
+        <item name="android:button">@drawable/cb_selector_like</item>
+    </style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

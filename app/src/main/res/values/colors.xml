@@ -5,6 +5,12 @@
     <!--    <color name="colorPrimary">#72A900</color>-->
     <!--    <color name="colorPrimaryDark">#598400</color>-->
     <color name="colorAccent">#FF7700</color>
+    <color name="gray_semitransparent">#99AAAAAA</color>
+    <color name="red_semitransparent">#C0FF0014</color>
+    <color name="green_semitransparent">#C000AA00</color>
+    <color name="blue_semitransparent">#660064FF</color>
+    <color name="white_semitransparent">#eeffffff</color>
+    <color name="white">#FFF</color>
     <!-- instagram gradient -->
     <color name="instagram_green">#0FD78B</color>
     <color name="instagram_blue">#21A4DE</color>

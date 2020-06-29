@@ -82,6 +82,15 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:maxLength="2" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/ic_view_list_black_24dp" />
         </LinearLayout>
 
         <ProgressBar

@@ -19,7 +19,7 @@ import java.util.List;
 public class ReminderDatabaseOpenHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String TAG = "DatabaseOpenHelper";
-    public static final String DB_NAME = "db_reminder_list";
+    private static final String DB_NAME = "db_reminder_list";
     private static final String TASKS_TABLE_NAME = "tbl_tasks";
     private static final String COL_SUBJECT = "col_subj";
     private static final String COL_ID = "col_id";
@@ -58,7 +58,7 @@ public class ReminderDatabaseOpenHelper extends SQLiteOpenHelper {
         contentValues.put(COL_COMMENT, item.getComment());
         contentValues.put(COL_TIME, item.getTimeBegin().toString());
         contentValues.put(COL_DURATION, item.getDuration());
-        contentValues.put(COL_IS_DONE, item.isDone());
+        contentValues.put(COL_IS_DONE, -1);
         SQLiteDatabase database = this.getWritableDatabase();
         long isInserted = database.insert(TASKS_TABLE_NAME, null, contentValues);
         Log.i(TAG, "addItem: " + isInserted);
@@ -87,6 +87,7 @@ public class ReminderDatabaseOpenHelper extends SQLiteOpenHelper {
                 items.add(item);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         database.close();
         return items;
     }
@@ -99,7 +100,8 @@ public class ReminderDatabaseOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_IS_DONE, isDone);
-        database.update(TASKS_TABLE_NAME, contentValues, COL_ID + " = " + itemID, null);
+        int status = database.update(TASKS_TABLE_NAME, contentValues, COL_ID + " = " + itemID, null);
+        Log.i(TAG, "*** " + status + "item(s) setDone: " + isDone);
         database.close();
     }
 

@@ -3,6 +3,7 @@ package com.example.timetable.ui.main;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.example.timetable.todoList.ItemListAdaptor;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.*;
 
@@ -34,7 +36,7 @@ public class ReminderListFragment extends Fragment {
     private ItemListAdaptor listAdaptor;
     private ReminderDatabaseOpenHelper databaseOpenHelper;
 
-    public static ReminderListFragment newInstance(int index) {
+    static ReminderListFragment newInstance(int index) {
         ReminderListFragment fragment = new ReminderListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
@@ -62,10 +64,21 @@ public class ReminderListFragment extends Fragment {
             recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    if(scrollY>oldScrollY){
-                        ((MainActivity)getContext()).fab.animate().translationY(150f).scaleX(0).scaleY(0).setDuration(200L);
-                    }else if(scrollY<oldScrollY){
-                        ((MainActivity)getContext()).fab.animate().translationY(0f).scaleX(1).scaleY(1).setDuration(200L);
+                    if (scrollY > oldScrollY) {
+                        ((MainActivity) Objects.requireNonNull(getContext()))
+                                .fab.animate().translationY(100f).scaleX(0).scaleY(0).setDuration(150L);
+                        ((MainActivity) getContext()).fab.setVisibility(View.INVISIBLE);
+
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                ((MainActivity) getContext()).fab.setVisibility(View.GONE);
+//                            }
+//                        }, 120L);
+                    } else if (scrollY < oldScrollY) {
+                        ((MainActivity) Objects.requireNonNull(getContext()))
+                                .fab.animate().translationY(0f).scaleX(1).scaleY(1).setDuration(150L);
+                        ((MainActivity) getContext()).fab.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -76,7 +89,11 @@ public class ReminderListFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                listAdaptor.setDeleteMode(false);
+                if (listAdaptor.isDeleteMode()) {
+                    listAdaptor.setDeleteMode(false);
+                } else {
+                    Objects.requireNonNull(getActivity()).finish();
+                }
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -84,7 +101,7 @@ public class ReminderListFragment extends Fragment {
         return root;
     }
 
-    public void addItem(Item item) {
+    private void addItem(Item item) {
         item.setId((int) databaseOpenHelper.addItem(item));
         items.add(item);
         listAdaptor.notifyDataSetChanged();
@@ -99,7 +116,6 @@ public class ReminderListFragment extends Fragment {
             newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
             newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
             newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
-            newItem.setDone(-1);
             addItem(newItem);
         }
     }
