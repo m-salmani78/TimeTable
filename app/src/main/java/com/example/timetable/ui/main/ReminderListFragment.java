@@ -3,14 +3,17 @@ package com.example.timetable.ui.main;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +38,8 @@ public class ReminderListFragment extends Fragment {
     private List<Item> items = new ArrayList<>();
     private ItemListAdaptor listAdaptor;
     private ReminderDatabaseOpenHelper databaseOpenHelper;
+    public CardView deleteBar;
+    public TextView deletionItemsNum;
 
     static ReminderListFragment newInstance(int index) {
         ReminderListFragment fragment = new ReminderListFragment();
@@ -56,7 +61,8 @@ public class ReminderListFragment extends Fragment {
 
         //recycler view
         RecyclerView recyclerView = root.findViewById(R.id.recycle_view);
-        listAdaptor = new ItemListAdaptor(databaseOpenHelper.getItems(items), getContext(), databaseOpenHelper);
+        listAdaptor = new ItemListAdaptor(databaseOpenHelper.getItems(items), getContext()
+                , databaseOpenHelper,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(listAdaptor);
 
@@ -83,6 +89,35 @@ public class ReminderListFragment extends Fragment {
                 }
             });
         }
+        //delete toolbar
+        deleteBar =root.findViewById(R.id.delete_bar);
+        deletionItemsNum=root.findViewById(R.id.deletion_items_num);
+        ImageButton trashcan = root.findViewById(R.id.trashcan);
+        trashcan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listAdaptor.doDelete();
+                listAdaptor.setDeleteMode(false);
+            }
+        });
+        ImageButton cancelBtn=root.findViewById(R.id.cancel_btn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listAdaptor.isDeleteMode()) {
+                    listAdaptor.setDeleteMode(false);
+                }
+            }
+        });
+
+        final CheckBox checkBox=root.findViewById(R.id.cb_choose_all);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listAdaptor.chooseAll(checkBox.isChecked());
+            }
+        });
+
 
         //override back button event
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -101,7 +136,7 @@ public class ReminderListFragment extends Fragment {
         return root;
     }
 
-    private void addItem(Item item) {
+    public void addItem(Item item) {
         item.setId((int) databaseOpenHelper.addItem(item));
         items.add(item);
         listAdaptor.notifyDataSetChanged();

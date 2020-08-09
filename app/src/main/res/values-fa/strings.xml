@@ -100,4 +100,6 @@
     </string>
     <string name="action_settings">تنظیمات</string>
     <string name="share_btn">share_btn</string>
+    <string name="trash">زباله</string>
+    <string name="all">انتخاب همه</string>
 </resources>

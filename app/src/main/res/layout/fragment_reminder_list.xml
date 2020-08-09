@@ -20,5 +20,62 @@
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/delete_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_margin="@dimen/small_margin"
+        android:elevation="4dp"
+        android:visibility="invisible"
+        app:cardCornerRadius="32dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@string/trash"
+                android:foreground="?attr/selectableItemBackground"
+                android:src="@drawable/ic_close_black_24dp"
+                tools:ignore="UnusedAttribute" />
+
+            <TextView
+                android:id="@+id/deletion_items_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/normal_font_size"
+                tools:text="2" />
+
+            <ImageButton
+                android:id="@+id/trashcan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@string/trash"
+                android:foreground="?attr/selectableItemBackground"
+                android:src="@drawable/ic_delete_gray_24dp"
+                tools:ignore="UnusedAttribute" />
+
+            <CheckBox
+                android:id="@+id/cb_choose_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/normal_margin"
+                android:text="@string/all" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
