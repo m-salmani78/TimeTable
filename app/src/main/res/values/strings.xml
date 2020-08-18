@@ -122,6 +122,4 @@
     <string name="developer" translatable="false">Developed By Mohammad Mahdi Salmani</string>
     <string name="share_btn">share_btn</string>
     <string name="web_page_btn">web_page_btn</string>
-    <string name="trash">trash</string>
-    <string name="all">All</string>
 </resources>

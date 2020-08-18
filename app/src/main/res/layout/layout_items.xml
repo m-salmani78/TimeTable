@@ -31,6 +31,16 @@
             android:background="@drawable/radio_btn_background_undone" />
     </RadioGroup>
 
+    <View
+        android:id="@+id/chosen_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/items_layout"
+        android:layout_alignParentTop="true"
+        android:alpha="0.5"
+        android:background="@color/instagram_blue"
+        android:visibility="invisible" />
+
     <LinearLayout
         android:id="@+id/items_layout"
         android:layout_width="match_parent"
@@ -41,14 +51,11 @@
         android:layout_marginTop="@dimen/normal_margin"
         android:layout_toStartOf="@id/radio_group"
         android:background="@drawable/todo_list_background"
-        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingTop="4dp"
         android:paddingRight="12dp"
-        android:paddingBottom="4dp"
-        tools:ignore="UnusedAttribute">
-
+        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/item_cb_header"
@@ -105,13 +112,4 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/chosen_item_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/items_layout"
-        android:layout_alignParentTop="true"
-        android:alpha="0.5"
-        android:background="@color/instagram_blue"
-        android:visibility="invisible" />
 </RelativeLayout>

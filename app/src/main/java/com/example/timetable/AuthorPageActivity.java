@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Environment;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -81,12 +80,6 @@ public class AuthorPageActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_author_page,menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

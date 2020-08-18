@@ -20,7 +20,7 @@
             android:layout_marginBottom="@dimen/small_margin"
             android:adjustViewBounds="true"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/unload_image" />
+            tools:src="@drawable/nature_wallpaper" />
 
         <TextView
             android:id="@+id/feature_title"

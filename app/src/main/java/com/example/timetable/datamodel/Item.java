@@ -8,10 +8,6 @@ public class Item {
     private Time timeBegin;
     private Week week;
     private boolean deleted=false;
-    public static final int STATUS_DONE = 1;
-    public static final int STATUS_UNDONE = 0;
-    public static final int STATUS_null = -1;
-
 
     public enum Week {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;

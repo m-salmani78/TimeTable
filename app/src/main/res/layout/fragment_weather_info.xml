@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_search_48dp"
+            android:src="@drawable/ic_search_green_48dp"
             app:backgroundTint="@android:color/white"
             app:fabSize="normal" />
 

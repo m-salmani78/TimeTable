@@ -3,6 +3,8 @@ package com.example.timetable;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.timetable.datamodel.Item;
 import com.example.timetable.ui.main.ReminderListFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -78,19 +80,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RQ_CODE_ADD_ACTIVITY && resultCode == RESULT_OK) {
-            Item newItem = new Item(-1);
-            newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
-            newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
-            newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
-            newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
-            newItem.setDone(-1);
-            ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == RQ_CODE_ADD_ACTIVITY && resultCode == RESULT_OK) {
+//            Item newItem = new Item(-1);
+//            newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
+//            newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
+//            newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
+//            newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
+//            newItem.setDone(-1);
+//            ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -13,11 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.example.timetable.R;
 import com.example.timetable.datamodel.Item;
-import com.example.timetable.ui.main.ReminderListFragment;
 
 import java.util.List;
 
@@ -26,7 +23,6 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
     private List<Item> items;
     private Context context;
     private ReminderDatabaseOpenHelper databaseOpenHelper;
-    private ReminderListFragment fragment;
     private boolean deleteMode = false;
     private int deletionItemNum = 0;
 
@@ -36,34 +32,19 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
 
     public void setDeleteMode(boolean deleteMode) {
         this.deleteMode = deleteMode;
-        if (deleteMode) {
-            YoYo.with(Techniques.ZoomIn).duration(200L).playOn(fragment.deleteBar);
-            fragment.deleteBar.setVisibility(View.VISIBLE);
-        } else {
-            YoYo.with(Techniques.ZoomOutUp).duration(300L).playOn(fragment.deleteBar);
+        if (!deleteMode) {
             for (Item item : items) {
                 item.setDeleted(false);
             }
             deletionItemNum = 0;
-            notifyDataSetChanged();
+            notifyItemRangeChanged(0, getItemCount());
         }
     }
 
-    public void doDelete() {
-        for (Item item : items) {
-            if (item.isDeleted())
-                databaseOpenHelper.deleteItem(item.getId());
-        }
-        databaseOpenHelper.getItems(items);
-        notifyDataSetChanged();
-    }
-
-    public ItemListAdaptor(List<Item> items, Context context
-            , ReminderDatabaseOpenHelper databaseOpenHelper, ReminderListFragment fragment) {
+    public ItemListAdaptor(List<Item> items, Context context, ReminderDatabaseOpenHelper databaseOpenHelper) {
         this.items = items;
         this.context = context;
         this.databaseOpenHelper = databaseOpenHelper;
-        this.fragment = fragment;
     }
 
     @NonNull
@@ -83,23 +64,23 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
         holder.subject_txt.setText(subject);
         holder.title.setText(item.getComment());
 
-        if (item.isDone() == Item.STATUS_DONE) {
+        if (item.isDone() == 1) {
             holder.rd_btn_done.setChecked(true);
-        } else if (item.isDone() == Item.STATUS_UNDONE) {
+        } else if (item.isDone() == 0) {
             holder.rd_btn_undone.setChecked(true);
         } else {
             holder.rd_btn_done.setChecked(false);
             holder.rd_btn_undone.setChecked(false);
         }
         holder.time.setText(item.getTimeBegin().toString());
-        String durationStr = item.getDuration() + " min";
+        String durationStr=item.getDuration() + " min";
         holder.duration.setText(durationStr);
 
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (!deleteMode) setDeleteMode(true);
-                if (!item.isDeleted()) {
+                if (!deleteMode)setDeleteMode(true);
+                if(!item.isDeleted()) {
                     setItemDeletionMode(holder, item, true);
                 }
                 return true;
@@ -117,36 +98,21 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
             }
         });
 
-        holder.rd_btn_done.setOnClickListener(new View.OnClickListener() {
+        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "task " + position + "is checked", Toast.LENGTH_SHORT).show();
-                databaseOpenHelper.setIsDone(item.getId(), Item.STATUS_DONE);
-                item.setDone(Item.STATUS_DONE);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int state = -1;
+                if (checkedId == holder.rd_btn_done.getId()) {
+                    Toast.makeText(context, "task " + position + "is checked", Toast.LENGTH_SHORT).show();
+                    state = 1;
+                } else if (checkedId == holder.rd_btn_undone.getId()) {
+                    Toast.makeText(context, "task " + position + "isn't done", Toast.LENGTH_SHORT).show();
+                    state = 0;
+                }
+                databaseOpenHelper.setIsDone(item.getId(), state);
+                item.setDone(state);
             }
         });
-        holder.rd_btn_undone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "task " + position + "is checked", Toast.LENGTH_SHORT).show();
-                databaseOpenHelper.setIsDone(item.getId(), Item.STATUS_UNDONE);
-                item.setDone(Item.STATUS_UNDONE);
-            }
-        });
-    }
-
-    public void chooseAll(boolean flag) {
-        for (Item item : items) {
-            item.setDeleted(flag);
-        }
-        if(!flag) {
-            deletionItemNum = 0;
-        }else {
-            deletionItemNum=items.size();
-        }
-        String str = deletionItemNum + "";
-        fragment.deletionItemsNum.setText(str);
-        notifyDataSetChanged();
     }
 
     private void setItemBackGround(ItemViewHolder holder, boolean flag) {
@@ -168,9 +134,7 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
             deletionItemNum--;
             if (deletionItemNum == 0) setDeleteMode(false);
         }
-        String str = deletionItemNum + "";
-        fragment.deletionItemsNum.setText(str);
-//        Toast.makeText(context, "deleted items =" + deletionItemNum, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "deleted items =" + deletionItemNum, Toast.LENGTH_SHORT).show();
     }
 
     @Override
