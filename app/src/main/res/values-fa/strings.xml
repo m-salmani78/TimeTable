@@ -100,4 +100,8 @@
     </string>
     <string name="action_settings">تنظیمات</string>
     <string name="share_btn">share_btn</string>
+    <string name="choose_all">همه</string>
+    <string name="delete">حذف</string>
+    <string name="cancel">لغو</string>
+    <string name="user_background">پس زمینه کاربر</string>
 </resources>

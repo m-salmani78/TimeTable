@@ -14,10 +14,12 @@
     <!-- instagram gradient -->
     <color name="instagram_green">#0FD78B</color>
     <color name="instagram_blue">#21A4DE</color>
+    <color name="instagram_blue_light">#96C8FF</color>
     <color name="instagram_green_light">#19C5AA</color>
     <color name="instagram_orange">#F58529</color>
     <color name="instagram_blue_dark">#515BD4</color>
     <color name="instagram_purple">#8134AF</color>
     <color name="instagram_pink">#DD2A7B</color>
+    <color name="bluish_gray">#8888CC</color>
 
 </resources>

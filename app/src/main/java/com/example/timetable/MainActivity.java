@@ -3,8 +3,6 @@ package com.example.timetable;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.example.timetable.datamodel.Item;
 import com.example.timetable.ui.main.ReminderListFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,7 +14,9 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.timetable.ui.main.SectionsPagerAdapter;
 
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 if (viewPager.getCurrentItem() != 0) {
-                    fab.animate().translationY(150f).scaleX(0).scaleY(0).setDuration(200L);
                     fab.setVisibility(View.GONE);
+                    fab.animate().translationY(150f).scaleX(0).scaleY(0).setDuration(200L);
                 }
             }
 
@@ -80,25 +80,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RQ_CODE_ADD_ACTIVITY && resultCode == RESULT_OK) {
-//            Item newItem = new Item(-1);
-//            newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
-//            newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
-//            newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
-//            newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
-//            newItem.setDone(-1);
-//            ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RQ_CODE_ADD_ACTIVITY && resultCode == RESULT_OK) {
+            Item newItem = new Item(-1);
+            if (data != null) {
+                newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
+                newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
+                newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
+                newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
+            }
+            newItem.setDone(-1);
+            Toast.makeText(this, "item added", Toast.LENGTH_SHORT).show();
+            ((ReminderListFragment) SectionsPagerAdapter.getPageInstance(0)).addItem(newItem);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add("settings");
-        menu.add("help");
-        menu.add("about us");
+        MenuItem search_item = menu.add("search");
+        search_item.setIcon(R.drawable.ic_search_white_48dp);
+        search_item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        menu.add("help");
+//        menu.add("about us");
         return super.onCreateOptionsMenu(menu);
     }
 }

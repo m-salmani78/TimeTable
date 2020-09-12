@@ -52,6 +52,7 @@
         android:layout_toStartOf="@id/radio_group"
         android:background="@drawable/todo_list_background"
         android:orientation="vertical"
+        android:elevation="2dp"
         android:paddingLeft="12dp"
         android:paddingTop="4dp"
         android:paddingRight="12dp"

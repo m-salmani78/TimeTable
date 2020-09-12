@@ -24,7 +24,17 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
     private Context context;
     private ReminderDatabaseOpenHelper databaseOpenHelper;
     private boolean deleteMode = false;
-    private int deletionItemNum = 0;
+    private int selectedItemsNum = 0;
+    private OnDeleteMode onDeleteMode;
+
+    public int getSelectedItemsNum() {
+        return selectedItemsNum;
+    }
+
+    public void setSelectedItemsNum(int selectedItemsNum) {
+        this.selectedItemsNum = selectedItemsNum;
+        onDeleteMode.onItemNumChanged(selectedItemsNum, false);
+    }
 
     public boolean isDeleteMode() {
         return deleteMode;
@@ -32,19 +42,22 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
 
     public void setDeleteMode(boolean deleteMode) {
         this.deleteMode = deleteMode;
+        onDeleteMode.onDeleteModeChanged(deleteMode);
         if (!deleteMode) {
             for (Item item : items) {
-                item.setDeleted(false);
+                item.setSelected(false);
             }
-            deletionItemNum = 0;
+            selectedItemsNum = 0;
             notifyItemRangeChanged(0, getItemCount());
         }
     }
 
-    public ItemListAdaptor(List<Item> items, Context context, ReminderDatabaseOpenHelper databaseOpenHelper) {
+    public ItemListAdaptor(List<Item> items, Context context
+            , ReminderDatabaseOpenHelper databaseOpenHelper, OnDeleteMode onDeleteMode) {
         this.items = items;
         this.context = context;
         this.databaseOpenHelper = databaseOpenHelper;
+        this.onDeleteMode = onDeleteMode;
     }
 
     @NonNull
@@ -57,7 +70,7 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, final int position) {
         final Item item = items.get(position);
-        boolean flag = item.isDeleted();
+        boolean flag = item.isSelected();
         setItemBackGround(holder, flag);
 
         String subject = position + ". " + item.getSubject();
@@ -73,14 +86,14 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
             holder.rd_btn_undone.setChecked(false);
         }
         holder.time.setText(item.getTimeBegin().toString());
-        String durationStr=item.getDuration() + " min";
+        String durationStr = item.getDuration() + " min";
         holder.duration.setText(durationStr);
 
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (!deleteMode)setDeleteMode(true);
-                if(!item.isDeleted()) {
+                if (!deleteMode) setDeleteMode(true);
+                if (!item.isSelected()) {
                     setItemDeletionMode(holder, item, true);
                 }
                 return true;
@@ -91,26 +104,25 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
             @Override
             public void onClick(View v) {
                 if (deleteMode) {
-                    setItemDeletionMode(holder, item, !item.isDeleted());
-                } else {
-                    //TODO
+                    setItemDeletionMode(holder, item, !item.isSelected());
                 }
             }
         });
 
-        holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        holder.rd_btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int state = -1;
-                if (checkedId == holder.rd_btn_done.getId()) {
-                    Toast.makeText(context, "task " + position + "is checked", Toast.LENGTH_SHORT).show();
-                    state = 1;
-                } else if (checkedId == holder.rd_btn_undone.getId()) {
-                    Toast.makeText(context, "task " + position + "isn't done", Toast.LENGTH_SHORT).show();
-                    state = 0;
-                }
-                databaseOpenHelper.setIsDone(item.getId(), state);
-                item.setDone(state);
+            public void onClick(View v) {
+                item.setDone(1);
+                databaseOpenHelper.setIsDone(item.getId(), 1);
+                Toast.makeText(context, "task " + position + "is done", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.rd_btn_undone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item.setDone(0);
+                databaseOpenHelper.setIsDone(item.getId(), 0);
+                Toast.makeText(context, "task " + position + "isn't done", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -118,23 +130,24 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
     private void setItemBackGround(ItemViewHolder holder, boolean flag) {
         if (flag) {
             holder.view.setVisibility(View.VISIBLE);
-            holder.layout.setSelected(true);
         } else {
             holder.view.setVisibility(View.INVISIBLE);
-            holder.layout.setSelected(false);
         }
+        holder.layout.setSelected(flag);
     }
 
-    private void setItemDeletionMode(ItemViewHolder holder, Item item, boolean deletedItem) {
-        setItemBackGround(holder, deletedItem);
-        item.setDeleted(deletedItem);
-        if (deletedItem) {
-            deletionItemNum++;
+    private void setItemDeletionMode(ItemViewHolder holder, Item item, boolean selectedItem) {
+        setItemBackGround(holder, selectedItem);
+        item.setSelected(selectedItem);
+        holder.layout.setSelected(selectedItem);
+        if (selectedItem) {
+            selectedItemsNum++;
         } else {
-            deletionItemNum--;
-            if (deletionItemNum == 0) setDeleteMode(false);
+            selectedItemsNum--;
+            if (selectedItemsNum == 0) setDeleteMode(false);
         }
-        Toast.makeText(context, "deleted items =" + deletionItemNum, Toast.LENGTH_SHORT).show();
+        onDeleteMode.onItemNumChanged(selectedItemsNum, true);
+        Toast.makeText(context, "deleted items =" + selectedItemsNum, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -142,17 +155,12 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
         return items.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView subject_txt;
-        TextView time;
-        TextView duration;
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        TextView title, subject_txt, time, duration;
         RadioGroup radioGroup;
         RadioButton rd_btn_done, rd_btn_undone;
-        //        CardView cardView;
         LinearLayout layout;
         View view;
-//        CheckBox delete_cb;
 
         ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -162,11 +170,16 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
             duration = itemView.findViewById(R.id.time_duration);
             subject_txt = itemView.findViewById(R.id.item_cb_header);
             radioGroup = itemView.findViewById(R.id.radio_group);
-            rd_btn_done = itemView.findViewById(R.id.radioButton_done);
             rd_btn_undone = itemView.findViewById(R.id.radioButton_undone);
+            rd_btn_done = itemView.findViewById(R.id.radioButton_done);
             view = itemView.findViewById(R.id.chosen_item_view);
             layout = itemView.findViewById(R.id.items_layout);
-//            delete_cb = itemView.findViewById(R.id.delete_cb);
         }
+    }
+
+    public interface OnDeleteMode {
+        void onDeleteModeChanged(boolean deleteMode);
+
+        void onItemNumChanged(int newItemNum, boolean fromUser);
     }
 }

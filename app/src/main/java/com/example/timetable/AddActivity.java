@@ -41,15 +41,17 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         subject = findViewById(R.id.subject_ed_txt);
         comment = findViewById(R.id.comment_ed_txt);
         beginningTime = findViewById(R.id.beginning_time);
-        timeDuration = findViewById(R.id.end_time);
+        timeDuration = findViewById(R.id.time_duration);
         confirm_btn = findViewById(R.id.confirm_btn);
         remaining_words_txt = findViewById(R.id.remaining_words);
 
 
         //actionbar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
 
         //time set
         now = Calendar.getInstance();
