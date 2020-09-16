@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem search_item = menu.add("search");
-        search_item.setIcon(R.drawable.ic_search_white_48dp);
+        search_item.setIcon(R.drawable.ic_search_48dp);
         search_item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 //        menu.add("help");
 //        menu.add("about us");

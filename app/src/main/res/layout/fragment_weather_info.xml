@@ -32,7 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_search_green_48dp"
+            android:src="@drawable/ic_search_48dp"
+            android:tint="@color/colorPrimary"
             app:backgroundTint="@android:color/white"
             app:fabSize="normal" />
 
@@ -44,7 +45,7 @@
             android:layout_weight="2"
             android:ems="6"
             android:gravity="center"
-            android:hint="Name"
+            android:hint="@string/city_name"
             android:inputType="textPersonName"
             android:textColor="@android:color/white"
             android:textColorHint="#ccffffff"
@@ -56,10 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/developer_name_txt"
         android:layout_below="@id/linear_layout"
-        android:layout_marginLeft="@dimen/normal_margin"
-        android:layout_marginRight="@dimen/normal_margin"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/edit_text_background">
+        android:background="@drawable/blunt_corners_bg"
+        android:backgroundTint="@android:color/white">
 
         <LinearLayout
             android:id="@+id/weather_info"

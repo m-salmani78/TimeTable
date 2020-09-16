@@ -11,23 +11,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="4dp"
-        android:orientation="vertical"
-        android:padding="6dp">
+        android:layout_marginEnd="@dimen/small_margin"
+        android:orientation="vertical">
 
         <RadioButton
             android:id="@+id/radioButton_done"
-            style="@style/RadioButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:button="@drawable/ic_round_done_24"
+            android:buttonTint="@android:color/white"
             android:background="@drawable/radio_btn_background_done" />
 
         <RadioButton
             android:id="@+id/radioButton_undone"
-            style="@style/RadioButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:button="@drawable/ic_round_close_24"
+            android:buttonTint="@android:color/white"
             android:background="@drawable/radio_btn_background_undone" />
     </RadioGroup>
 
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/items_layout"
+        android:layout_marginBottom="-8dp"
         android:layout_alignParentTop="true"
         android:alpha="0.5"
         android:background="@color/instagram_blue"
@@ -46,9 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/normal_margin"
+        android:layout_margin="@dimen/small_margin"
         android:layout_toStartOf="@id/radio_group"
         android:background="@drawable/todo_list_background"
         android:orientation="vertical"

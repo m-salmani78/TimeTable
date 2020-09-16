@@ -3,7 +3,6 @@ package com.example.timetable;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,8 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Environment;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -72,10 +69,10 @@ public class AuthorPageActivity extends AppCompatActivity {
                 Snackbar.make(view, "you " + (favorite ? "unlike" : "like") + " picture", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
                 if (!favorite) {
-                    fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+                    fab.setImageResource(R.drawable.ic_heart_fill_24dp);
                     favorite = true;
                 } else {
-                    fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                    fab.setImageResource(R.drawable.ic_heart_outline_24dp);
                     favorite = false;
                 }
             }

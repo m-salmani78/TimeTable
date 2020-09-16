@@ -21,6 +21,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class AddActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, View.OnClickListener {
@@ -87,7 +88,9 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     public void onTimeSet(TimePicker timePicker, int i, int i1) {
         hourBegin = timePicker.getHour();
         minuteBegin = timePicker.getMinute();
-        String time = ((hourBegin < 10) ? "0" : "") + hourBegin + ":" + ((minuteBegin < 10) ? "0" : "") + minuteBegin;
+//        String time = ((hourBegin < 10) ? "0" : "") + hourBegin + ":" + ((minuteBegin < 10) ? "0" : "") + minuteBegin;
+        String time = String.format(Locale.ENGLISH, "%02d", hourBegin)
+                + ":" + String.format(Locale.ENGLISH, "%02d", minuteBegin);
         beginningTime.setText(time);
     }
 
