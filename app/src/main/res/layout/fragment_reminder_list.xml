@@ -13,18 +13,18 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:alpha="0.6"
+        android:contentDescription="@string/user_background"
         android:scaleType="centerCrop"
         android:src="@drawable/telegram_pattern"
         app:layout_anchor="@+id/recycle_view"
-        app:layout_anchorGravity="center"
-        android:contentDescription="@string/user_background" />
+        app:layout_anchorGravity="center" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/layout_items"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/layout_items" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/deleting_actionbar"
@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/small_margin"
-        app:cardCornerRadius="24dp"
         android:visibility="gone"
+        app:cardCornerRadius="24dp"
         app:cardElevation="4dp">
 
         <LinearLayout
@@ -46,9 +46,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@string/cancel"
                 android:foreground="?attr/selectableItemBackground"
-                app:srcCompat="@drawable/ic_round_close_24"
-                android:contentDescription="@string/cancel" />
+                app:srcCompat="@drawable/ic_round_close_24" />
 
             <TextView
                 android:id="@+id/items_num_txt"
@@ -65,18 +65,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/normal_margin"
-                android:textColor="@color/bluish_gray"
                 android:buttonTint="@color/bluish_gray"
-                android:text="@string/choose_all" />
+                android:text="@string/choose_all"
+                android:textColor="@color/bluish_gray" />
 
             <ImageButton
                 android:id="@+id/imageBtn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@string/delete"
                 android:foreground="?attr/selectableItemBackground"
-                app:srcCompat="@drawable/ic_baseline_delete_24"
-                android:contentDescription="@string/delete" />
+                app:srcCompat="@drawable/ic_baseline_delete_24" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <com.example.timetable.customs.view.CustomAudioPlayer
+        android:id="@+id/audio_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:buttonTint="@color/colorPrimary"
+        android:layout_gravity="center_horizontal"
+        android:progressTint="@color/colorPrimary"
+        android:thumbTint="@color/colorPrimary" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package com.example.timetable.ui.main;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.timetable.MainActivity;
 import com.example.timetable.R;
+import com.example.timetable.customs.view.CustomAudioPlayer;
 import com.example.timetable.todoList.ReminderDatabaseOpenHelper;
 import com.example.timetable.datamodel.Item;
 import com.example.timetable.todoList.ItemListAdaptor;
@@ -31,13 +33,13 @@ import java.util.Objects;
 
 public class ReminderListFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-//    public static final int RQ_CODE_ADD_ACTIVITY = 301;
     private List<Item> items = new ArrayList<>();
     private ItemListAdaptor listAdaptor;
     private ReminderDatabaseOpenHelper databaseOpenHelper;
     private View cardView, btnCancel, btnDelete;
     private CheckBox cbSelectAll;
     private TextView txtItemNum;
+    private CustomAudioPlayer audioPlayer;
 
     static ReminderListFragment newInstance() {
         ReminderListFragment fragment = new ReminderListFragment();
@@ -141,6 +143,31 @@ public class ReminderListFragment extends Fragment {
             });
         }
 
+        //setup audio player
+        audioPlayer=root.findViewById(R.id.audio_player);
+        audioPlayer.setupAudioPlayer("behnam_bani", new CustomAudioPlayer.AudioPlayerListener() {
+            @Override
+            public void onPlay() {
+
+            }
+
+            @Override
+            public void onPause() {
+
+            }
+
+            @Override
+            public void onProgressChanged() {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+
         //override back button event
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -150,7 +177,7 @@ public class ReminderListFragment extends Fragment {
                     listAdaptor.setDeleteMode(false);
                 } else {
                     Toast.makeText(getContext(), "click back again", Toast.LENGTH_SHORT).show();
-//                    Objects.requireNonNull(getActivity()).finish();
+                    Objects.requireNonNull(getActivity()).finish();
                 }
             }
         };
@@ -165,16 +192,9 @@ public class ReminderListFragment extends Fragment {
         listAdaptor.notifyDataSetChanged();
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RQ_CODE_ADD_ACTIVITY && resultCode == RESULT_OK) {
-//            Item newItem = new Item(-1);
-//            newItem.setSubject(data.getStringExtra(AddActivity.SUBJECT_TEXT));
-//            newItem.setTimeBegin(Time.valueOf(data.getStringExtra(AddActivity.START_TIME_TEXT) + ":00"));
-//            newItem.setDuration(data.getIntExtra(AddActivity.TIME_DURATION, 0));
-//            newItem.setComment(data.getStringExtra(AddActivity.COMMENT_TEXT));
-//            addItem(newItem);
-//        }
-//    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        audioPlayer.destroy();
+    }
 }

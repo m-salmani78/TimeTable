@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="audioPlayer_attrs">
+        <attr name="android:buttonTint" format="color"/>
+        <attr name="android:progressTint" format="color"/>
+        <attr name="android:thumbTint" format="color"/>
+        <attr name="showDuration" format="boolean"/>
+        <attr name="android:progress" format="integer"/>
+    </declare-styleable>
+</resources>
