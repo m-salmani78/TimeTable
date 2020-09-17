@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:minWidth="256dp"
-    android:padding="@dimen/small_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="horizontal">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,13 +14,15 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_round_play_arrow_24"
         app:backgroundTint="@color/sound_layout_color"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/small_margin"
         app:fabSize="mini" />
 
     <SeekBar
         android:id="@+id/seekBar_sound_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:progressTint="@color/sound_layout_color"
         android:thumbTint="@color/sound_layout_color" />
@@ -30,7 +32,7 @@
         tools:text="21:00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/small_margin"
         android:minEms="2"
         android:textSize="12sp" />
 

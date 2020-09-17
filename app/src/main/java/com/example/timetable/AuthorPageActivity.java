@@ -31,7 +31,7 @@ public class AuthorPageActivity extends AppCompatActivity {
 
         //toolbar
         setContentView(R.layout.activity_author_page);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.author_page_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -42,19 +42,20 @@ public class AuthorPageActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitle(intent.getStringExtra(AppFeature.KEY_AUTHOR_NAME));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            Window window = getWindow();
 //            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 //                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 //            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //            window.setStatusBarColor(Color.parseColor("#10000000"));
-        }
+//        }
 
         //header image
         ImageView imageView = findViewById(R.id.author_image);
 
         File extImageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File file = new File(extImageDir.getAbsolutePath(), intent.getIntExtra(AppFeature.KEY_IMAGE_ID,0) + ".jpeg");
+        if (extImageDir == null) return;
+        File file = new File(extImageDir.getAbsolutePath(), intent.getIntExtra(AppFeature.KEY_IMAGE_ID, 0) + ".jpeg");
         if (file.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             imageView.setImageBitmap(bitmap);

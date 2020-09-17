@@ -5,11 +5,14 @@ import android.os.Bundle;
 
 import com.example.timetable.datamodel.Item;
 import com.example.timetable.ui.main.ReminderListFragment;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +28,7 @@ import java.sql.Time;
 public class MainActivity extends AppCompatActivity {
     public static final int RQ_CODE_ADD_ACTIVITY = 301;
     public FloatingActionButton fab;
+    AppBarLayout appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
         //toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 

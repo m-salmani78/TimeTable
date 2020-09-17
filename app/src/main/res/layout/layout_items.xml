@@ -18,18 +18,18 @@
             android:id="@+id/radioButton_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/radio_btn_background_done"
             android:button="@drawable/ic_round_done_24"
-            android:buttonTint="@android:color/white"
-            android:background="@drawable/radio_btn_background_done" />
+            android:buttonTint="@android:color/white" />
 
         <RadioButton
             android:id="@+id/radioButton_undone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:background="@drawable/radio_btn_background_undone"
             android:button="@drawable/ic_round_close_24"
-            android:buttonTint="@android:color/white"
-            android:background="@drawable/radio_btn_background_undone" />
+            android:buttonTint="@android:color/white" />
     </RadioGroup>
 
     <View
@@ -37,11 +37,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/items_layout"
-        android:layout_marginBottom="-8dp"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="-8dp"
         android:alpha="0.5"
         android:background="@color/instagram_blue"
         android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/items_layout"
+        android:layout_alignStart="@id/items_layout"
+        android:layout_alignEnd="@id/items_layout"
+        android:background="@drawable/radio_btn_background_undone"
+        android:backgroundTint="@color/gray_semitransparent"
+        android:paddingTop="@dimen/small_margin"
+        android:layout_marginTop="-16dp">
+
+        <com.example.timetable.customs.view.CustomAudioPlayer
+            android:id="@+id/audio_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:buttonTint="@color/colorPrimary"
+            android:progressTint="@color/colorPrimary"
+            android:thumbTint="@color/colorPrimary" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/items_layout"
@@ -51,8 +72,8 @@
         android:layout_margin="@dimen/small_margin"
         android:layout_toStartOf="@id/radio_group"
         android:background="@drawable/todo_list_background"
-        android:orientation="vertical"
         android:elevation="2dp"
+        android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingTop="4dp"
         android:paddingRight="12dp"

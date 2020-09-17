@@ -26,7 +26,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="true"
             tools:title="hey boy"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@id/author_page_toolbar">
 
             <ImageView
                 android:id="@+id/author_image"
@@ -46,7 +46,7 @@
                 app:layout_collapseMode="pin"/>
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/author_page_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"

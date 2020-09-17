@@ -79,14 +79,4 @@
                 app:srcCompat="@drawable/ic_baseline_delete_24" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-    <com.example.timetable.customs.view.CustomAudioPlayer
-        android:id="@+id/audio_player"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:buttonTint="@color/colorPrimary"
-        android:layout_gravity="center_horizontal"
-        android:progressTint="@color/colorPrimary"
-        android:thumbTint="@color/colorPrimary" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
