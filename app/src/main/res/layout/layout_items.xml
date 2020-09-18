@@ -20,118 +20,126 @@
             android:layout_height="wrap_content"
             android:background="@drawable/radio_btn_background_done"
             android:button="@drawable/ic_round_done_24"
-            android:buttonTint="@android:color/white" />
+            android:buttonTint="@color/colorAccent" />
 
         <RadioButton
             android:id="@+id/radioButton_undone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:background="@drawable/radio_btn_background_undone"
             android:button="@drawable/ic_round_close_24"
-            android:buttonTint="@android:color/white" />
+            android:buttonTint="@color/colorAccent" />
     </RadioGroup>
 
     <View
         android:id="@+id/chosen_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/items_layout"
+        android:layout_alignBottom="@id/item_layout"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="-8dp"
         android:alpha="0.5"
         android:background="@color/instagram_blue"
         android:visibility="invisible" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/items_layout"
-        android:layout_alignStart="@id/items_layout"
-        android:layout_alignEnd="@id/items_layout"
-        android:background="@drawable/radio_btn_background_undone"
-        android:backgroundTint="@color/gray_semitransparent"
-        android:paddingTop="@dimen/small_margin"
-        android:layout_marginTop="-16dp">
-
-        <com.example.timetable.customs.view.CustomAudioPlayer
-            android:id="@+id/audio_player"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:buttonTint="@color/colorPrimary"
-            android:progressTint="@color/colorPrimary"
-            android:thumbTint="@color/colorPrimary" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/items_layout"
+    <RelativeLayout
+        android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_margin="@dimen/small_margin"
-        android:layout_toStartOf="@id/radio_group"
-        android:background="@drawable/todo_list_background"
-        android:elevation="2dp"
-        android:orientation="vertical"
-        android:paddingLeft="12dp"
-        android:paddingTop="4dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="4dp">
-
-        <TextView
-            android:id="@+id/item_cb_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/normal_font_size"
-            android:textStyle="bold"
-            tools:text="@string/subject" />
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="4"
-            android:minLines="2"
-            android:textSize="@dimen/small_font_size"
-            tools:text="descriptions" />
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/radio_group">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:id="@+id/sub_item_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/main_item_layout"
+            android:layout_alignStart="@id/main_item_layout"
+            android:layout_alignEnd="@id/main_item_layout"
+            android:layout_marginTop="-45dp"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:background="@drawable/blunt_bottom_corners_background"
+            android:backgroundTint="@color/gray_semitransparent">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <com.example.timetable.customs.view.CustomAudioPlayer
+                android:id="@+id/audio_player"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_access_alarm_gray_24dp" />
-
-            <TextView
-                android:id="@+id/time_begin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/normal_margin"
-                tools:text="00:00:00" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/normal_margin"
-                app:srcCompat="@drawable/ic_timelapse_gray_24dp" />
-
-            <TextView
-                android:id="@+id/time_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                tools:text="-----" />
+                android:layout_gravity="bottom"
+                android:buttonTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
+                android:thumbTint="@color/colorPrimary"
+                android:visibility="visible" />
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/main_item_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/small_margin"
+            android:background="@drawable/todo_list_background"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="4dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:id="@+id/item_cb_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/normal_font_size"
+                android:textStyle="bold"
+                tools:text="@string/subject" />
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:minLines="2"
+                android:textSize="@dimen/small_font_size"
+                tools:text="descriptions" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_access_alarm_gray_24dp" />
+
+                <TextView
+                    android:id="@+id/time_begin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/normal_margin"
+                    tools:text="00:00:00" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/normal_margin"
+                    app:srcCompat="@drawable/ic_timelapse_gray_24dp" />
+
+                <TextView
+                    android:id="@+id/time_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    tools:text="1200 min" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

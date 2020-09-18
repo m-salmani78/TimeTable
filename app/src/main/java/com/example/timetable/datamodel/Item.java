@@ -7,10 +7,11 @@ public class Item {
     private String subject, comment;
     private Time timeBegin;
     private Week week;
-    private boolean selected = false;
+    private boolean selected = false, layoutExpended = false;
 
     public enum Week {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
+
     }
 
     public Item(int id) {
@@ -90,5 +91,13 @@ public class Item {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean isLayoutExpanded() {
+        return layoutExpended;
+    }
+
+    public void setLayoutExpended(boolean layoutExpended) {
+        this.layoutExpended = layoutExpended;
     }
 }

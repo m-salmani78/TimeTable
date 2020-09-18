@@ -1,6 +1,5 @@
 package com.example.timetable.ui.main;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -100,7 +99,7 @@ public class ReminderListFragment extends Fragment {
         //recycler view
         RecyclerView recyclerView = root.findViewById(R.id.recycle_view);
         listAdaptor = new ItemListAdaptor(databaseOpenHelper.getItems(items), getContext(), databaseOpenHelper
-                , new ItemListAdaptor.OnDeleteMode() {
+                , new ItemListAdaptor.OnDeletingItemsListener() {
             @Override
             public void onDeleteModeChanged(boolean deleteMode) {
                 if (deleteMode) {
@@ -143,31 +142,6 @@ public class ReminderListFragment extends Fragment {
             });
         }
 
-        //setup audio player
-        audioPlayer=root.findViewById(R.id.audio_player);
-        audioPlayer.setupAudioPlayer("behnam_bani", new CustomAudioPlayer.AudioPlayerListener() {
-            @Override
-            public void onPlay() {
-
-            }
-
-            @Override
-            public void onPause() {
-
-            }
-
-            @Override
-            public void onProgressChanged() {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
-
         //override back button event
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -190,11 +164,5 @@ public class ReminderListFragment extends Fragment {
         item.setId((int) databaseOpenHelper.addItem(item));
         items.add(item);
         listAdaptor.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        audioPlayer.destroy();
     }
 }
