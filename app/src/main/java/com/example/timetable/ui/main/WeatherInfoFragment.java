@@ -1,6 +1,14 @@
 package com.example.timetable.ui.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +23,20 @@ import com.example.timetable.ApiService.WeatherInfoApiService;
 import com.example.timetable.R;
 import com.example.timetable.datamodel.WeatherInfo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 public class WeatherInfoFragment extends Fragment implements WeatherInfoApiService.OnWeatherInfoReceived {
     public static String TAG = "WeatherInfoFragment";
     private View root;
 
-//    private Button requestFab;
-    private FloatingActionButton requestFab;
     private LinearLayout weatherInfoLayout;
     private View progressBar, noConnection;
+    private ConnectivityListener connectivityListener;
+    private Snackbar noConnectionSnackBar, connectingSnackBar;
 
     public static WeatherInfoFragment newInstance() {
-
         Bundle args = new Bundle();
         WeatherInfoFragment fragment = new WeatherInfoFragment();
         fragment.setArguments(args);
@@ -37,9 +47,9 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_weather_info, container, false);
-        requestFab = root.findViewById(R.id.request_btn);
+        FloatingActionButton requestFab = root.findViewById(R.id.request_btn);
         progressBar = root.findViewById(R.id.progressBar);
-        noConnection = root.findViewById(R.id.no_connection_img);
+        noConnection = root.findViewById(R.id.txt_no_connection);
         weatherInfoLayout = root.findViewById(R.id.weather_info);
         requestFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +61,11 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
                 weatherInfoApiService.getCurrentWeather(WeatherInfoFragment.this);
             }
         });
+
+        //initial broadcast receiver
+        connectivityListener = new ConnectivityListener();
+        IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        Objects.requireNonNull(getContext()).registerReceiver(connectivityListener, intentFilter);
         return root;
     }
 
@@ -80,5 +95,34 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
         weatherInfoLayout.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         noConnection.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Objects.requireNonNull(getContext()).unregisterReceiver(connectivityListener);
+    }
+
+    private class ConnectivityListener extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            noConnectionSnackBar = Snackbar.make(root, context.getResources().getString(R.string.no_connection), Snackbar.LENGTH_INDEFINITE);
+            connectingSnackBar = Snackbar.make(root, context.getResources().getString(R.string.connecting), Snackbar.LENGTH_INDEFINITE);
+
+            if (networkInfo == null) {
+                connectingSnackBar.dismiss();
+                noConnectionSnackBar.show();
+            } else if (networkInfo.isAvailable()) {
+                noConnectionSnackBar.dismiss();
+                connectingSnackBar.dismiss();
+                Snackbar.make(root, context.getResources().getString(R.string.connected), Snackbar.LENGTH_SHORT).show();
+            } else {
+                noConnectionSnackBar.dismiss();
+                connectingSnackBar.show();
+            }
+        }
     }
 }

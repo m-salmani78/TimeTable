@@ -105,4 +105,7 @@
     <string name="cancel">لغو</string>
     <string name="user_background">پس زمینه کاربر</string>
     <string name="city_name">نام شهر</string>
+    <string name="no_connection">اتصال برقرار نیست</string>
+    <string name="connecting">درحال اتصال...</string>
+    <string name="connected">متصل شد</string>
 </resources>

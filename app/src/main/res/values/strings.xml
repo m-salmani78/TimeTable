@@ -73,4 +73,7 @@
     <string name="zero_time" translatable="false">00 : 00</string>
     <string name="duration_zero" translatable="false">0 min</string>
     <string name="city_name">City Name</string>
+    <string name="no_connection">no connection :/</string>
+    <string name="connecting">connecting…</string>
+    <string name="connected">connected :)</string>
 </resources>

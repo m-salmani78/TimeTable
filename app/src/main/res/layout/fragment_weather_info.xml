@@ -58,7 +58,9 @@
         android:layout_above="@id/developer_name_txt"
         android:layout_below="@id/linear_layout"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/blunt_corners_bg"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/small_margin"
+        android:background="@drawable/todo_list_background"
         android:backgroundTint="@android:color/white">
 
         <LinearLayout
@@ -232,13 +234,15 @@
         android:layout_centerInParent="true"
         android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/no_connection_img"
+    <TextView
+        android:id="@+id/txt_no_connection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_no_internet_connection_96"
-        android:visibility="invisible" />
+        android:text="@string/no_connection"
+        android:visibility="invisible"
+        android:drawablePadding="@dimen/small_margin"
+        app:drawableStartCompat="@drawable/ic_round_wifi_off_24" />
 
 
 </RelativeLayout>
