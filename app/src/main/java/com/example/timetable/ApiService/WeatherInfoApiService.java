@@ -24,7 +24,7 @@ public class WeatherInfoApiService {
         this.context = context;
     }
 
-    private void getCurrentWeather(final OnWeatherInfoReceived weatherInfoReceived, final String city, String state) {
+    public void getCurrentWeather(final OnWeatherInfoReceived weatherInfoReceived, final String city, String state) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 "http://api.openweathermap.org/data/2.5/weather?q=" + city +
                         "," + state + "&appid=5cd7c03d20e6f4a356a1adad6dcfbbfe",

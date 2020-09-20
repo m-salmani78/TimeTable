@@ -5,7 +5,8 @@
     <!--    <color name="colorPrimary">#72A900</color>-->
     <!--    <color name="colorPrimaryDark">#598400</color>-->
     <color name="colorAccent">#FF7700</color>
-    <color name="gray_semitransparent">#AABBBBBB</color>
+    <color name="gray_semitransparent">#BBCCCCCC</color>
+    <color name="gray">#CCC</color>
     <color name="red_semitransparent">#C0FF0014</color>
     <color name="green_semitransparent">#C000AA00</color>
     <color name="blue_semitransparent">#660064FF</color>

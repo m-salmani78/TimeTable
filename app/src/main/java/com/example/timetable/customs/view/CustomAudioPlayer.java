@@ -37,9 +37,10 @@ public class CustomAudioPlayer extends LinearLayout {
     private SeekBar seekBar;
     private TextView remainingTimeTextView;
     private int duration;
-    private boolean showDuration;
-    private MediaPlayer mediaPlayer;
+    private boolean showDuration = true;
+    private MediaPlayer mediaPlayer = null;
     private Timer timer;
+    private boolean isPlaying = false;
 
     public CustomAudioPlayer(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -63,8 +64,7 @@ public class CustomAudioPlayer extends LinearLayout {
         ta.recycle();
     }
 
-    public void setupAudioPlayer(String fileName, @NonNull final AudioPlayerListener listener) {
-        this.listener = listener;
+    public void setupAudioPlayer(String fileName) {
 //        File musicDirectory = context.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
 //        if (musicDirectory == null) {
 //            Log.e(TAG, "setupMediaPlayer: directory not found!");
@@ -75,7 +75,7 @@ public class CustomAudioPlayer extends LinearLayout {
 
 //        if (music.exists()) {
         try {
-            mediaPlayer.setDataSource(context, Uri.parse("https://dls.music-fa.com/tagdl/99/Hamed%20Zamani%20-%20Mahe%20To%20(128).mp3"));
+            mediaPlayer.setDataSource(context, Uri.parse("https://irsv.upmusics.com/Downloads/Musics/Hamed%20Zamani%20%7C%20Saranjaam%20(128).mp3"));
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -91,7 +91,7 @@ public class CustomAudioPlayer extends LinearLayout {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     fab.setImageResource(R.drawable.ic_round_play_arrow_24);
-                    listener.onFinished();
+                    if (listener != null) listener.onFinished();
                 }
             });
 
@@ -108,11 +108,11 @@ public class CustomAudioPlayer extends LinearLayout {
             @Override
             public void onClick(View view) {
                 if (mediaPlayer.isPlaying()) {
-                    listener.onPause();
+                    if (listener != null) listener.onPause();
                     mediaPlayer.pause();
                     fab.setImageResource(R.drawable.ic_round_play_arrow_24);
                 } else {
-                    listener.onPlay();
+                    if (listener != null) listener.onPlay();
                     mediaPlayer.start();
                     fab.setImageResource(R.drawable.ic_round_pause_24);
                 }
@@ -124,7 +124,7 @@ public class CustomAudioPlayer extends LinearLayout {
             public void onProgressChanged(SeekBar seekBar, final int progress, boolean fromUser) {
                 if (fromUser) {
                     mediaPlayer.seekTo(progress);
-                    listener.onProgressChanged();
+                    if (listener != null) listener.onProgressChanged();
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -136,10 +136,14 @@ public class CustomAudioPlayer extends LinearLayout {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                if(mediaPlayer.isPlaying())isPlaying=true;
+                else isPlaying=false;
+                mediaPlayer.pause();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (isPlaying) mediaPlayer.start();
             }
         });
 
@@ -166,10 +170,25 @@ public class CustomAudioPlayer extends LinearLayout {
         return String.format(Locale.ENGLISH, "%02d", minutes) + ":" + String.format(Locale.ENGLISH, "%02d", seconds);
     }
 
-    public void destroy() {
+    public void setOnAudioListener(@NonNull AudioPlayerListener listener) {
+        this.listener = listener;
+    }
+
+    public void pause() {
+        if (mediaPlayer != null)
+            mediaPlayer.pause();
+    }
+
+    public void destroyAudioPlayer() {
+        if (timer == null || mediaPlayer == null) return;
         timer.purge();
         timer.cancel();
         mediaPlayer.release();
+        mediaPlayer = null;
+    }
+
+    public boolean isAudioSetup() {
+        return mediaPlayer != null;
     }
 
     public interface AudioPlayerListener {

@@ -20,27 +20,17 @@
             android:layout_height="wrap_content"
             android:background="@drawable/radio_btn_background_done"
             android:button="@drawable/ic_round_done_24"
-            android:buttonTint="@color/colorAccent" />
+            android:buttonTint="@android:color/white" />
 
         <RadioButton
             android:id="@+id/radioButton_undone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:background="@drawable/radio_btn_background_undone"
             android:button="@drawable/ic_round_close_24"
-            android:buttonTint="@color/colorAccent" />
+            android:buttonTint="@android:color/white" />
     </RadioGroup>
-
-    <View
-        android:id="@+id/chosen_item_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/item_layout"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="-8dp"
-        android:alpha="0.5"
-        android:background="@color/instagram_blue"
-        android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/item_layout"
@@ -142,4 +132,14 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <View
+        android:id="@+id/chosen_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_layout"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="-8dp"
+        android:alpha="0.5"
+        android:background="@color/instagram_blue"
+        android:visibility="invisible" />
 </RelativeLayout>

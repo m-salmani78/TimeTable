@@ -5,6 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,7 +36,7 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
     private boolean deleteMode = false;
     private int selectedItemsNum = 0;
     private OnDeletingItemsListener onDeletingItemsListener;
-    private static final int ANIM_DURATION = 600;
+    private static final int ANIM_DURATION = 500;
 
     public int getSelectedItemsNum() {
         return selectedItemsNum;
@@ -96,7 +100,7 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
         String durationStr = item.getDuration() + " min";
         holder.duration.setText(durationStr);
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (!deleteMode) setDeleteMode(true);
@@ -113,16 +117,18 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
                 if (deleteMode) {
                     setItemDeletionMode(holder, item, !item.isSelected());
                 } else {
-//                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) holder.childLayout.getLayoutParams();
-//                    int height = lp.height;
                     if (item.isLayoutExpanded()) {
                         holder.audioPlayer.pause();
                         CustomValueAnim.verticalScaleAnim(holder.childLayout, holder.originalHeight
-                                , holder.collapsedHeight, new FastOutSlowInInterpolator(), ANIM_DURATION);
+                                , holder.collapsedHeight, new AnticipateOvershootInterpolator(), ANIM_DURATION);
 //                        holder.audioPlayer.setVisibility(View.GONE);
                     } else {
+                        if (!holder.audioPlayer.isAudioSetup()) {
+                            //setup audio player
+                            holder.audioPlayer.setupAudioPlayer("behnam");
+                        }
                         CustomValueAnim.verticalScaleAnim(holder.childLayout, holder.collapsedHeight
-                                , holder.originalHeight, new FastOutSlowInInterpolator(), ANIM_DURATION);
+                                , holder.originalHeight, new AnticipateOvershootInterpolator(), ANIM_DURATION);
 //                        holder.audioPlayer.setVisibility(View.VISIBLE);
                     }
                     item.setLayoutExpended(!item.isLayoutExpanded());
@@ -146,8 +152,6 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
                 Toast.makeText(context, "task " + position + "isn't done", Toast.LENGTH_SHORT).show();
             }
         });
-        //setup audio player
-        holder.audioPlayer.setupAudioPlayer("behnam_bani");
     }
 
     private void setItemBackGround(ItemViewHolder holder, boolean flag) {
@@ -201,8 +205,8 @@ public class ItemListAdaptor extends RecyclerView.Adapter<ItemListAdaptor.ItemVi
             parentLayout = itemView.findViewById(R.id.main_item_layout);
             childLayout = itemView.findViewById(R.id.sub_item_layout);
             audioPlayer = itemView.findViewById(R.id.audio_player);
-            originalHeight=190;
-            collapsedHeight=80;
+            originalHeight = 190;
+            collapsedHeight = 80;
         }
     }
 

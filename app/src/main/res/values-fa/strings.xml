@@ -20,7 +20,7 @@
     <!-- weather info -->
     <string name="weather_info">آب و هوا</string>
     <string name="name_txt">نام شهر:</string>
-    <string name="temp">بالاترین دما:</string>
+    <string name="temp">دما:</string>
     <string name="min_temp">پایین ترین دما:</string>
     <string name="max_temp">بالا ترین دما:</string>
     <string name="description">وضعیت آسمان:</string>

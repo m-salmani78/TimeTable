@@ -39,6 +39,8 @@ public class ReminderListFragment extends Fragment {
     private CheckBox cbSelectAll;
     private TextView txtItemNum;
     private CustomAudioPlayer audioPlayer;
+    private static int totalRecyclerViewScroll = 0;
+    public static final int originalFabSize = 60;
 
     static ReminderListFragment newInstance() {
         ReminderListFragment fragment = new ReminderListFragment();
@@ -96,8 +98,6 @@ public class ReminderListFragment extends Fragment {
             }
         });
 
-        //recycler view
-        RecyclerView recyclerView = root.findViewById(R.id.recycle_view);
         listAdaptor = new ItemListAdaptor(databaseOpenHelper.getItems(items), getContext(), databaseOpenHelper
                 , new ItemListAdaptor.OnDeletingItemsListener() {
             @Override
@@ -123,6 +123,9 @@ public class ReminderListFragment extends Fragment {
                 }
             }
         });
+
+        //recycler view
+        RecyclerView recyclerView = root.findViewById(R.id.recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(listAdaptor);
 
@@ -130,14 +133,15 @@ public class ReminderListFragment extends Fragment {
             recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    if (scrollY > oldScrollY) {
-                        ((MainActivity) Objects.requireNonNull(getContext())).fab.setVisibility(View.INVISIBLE);
-
-                    } else if (scrollY < oldScrollY) {
-                        ((MainActivity) Objects.requireNonNull(getContext()))
-                                .fab.animate().translationY(0f).scaleX(1).scaleY(1).setDuration(150L);
-                        ((MainActivity) getContext()).fab.setVisibility(View.VISIBLE);
-                    }
+                    totalRecyclerViewScroll += (scrollY - oldScrollY);
+                    if (totalRecyclerViewScroll < 0) totalRecyclerViewScroll = 0;
+                    totalRecyclerViewScroll = Math.min(Math.abs(totalRecyclerViewScroll), originalFabSize);
+                    float scale = (float) totalRecyclerViewScroll / originalFabSize;
+                    scale = 1 - scale;
+                    ((MainActivity) getContext()).fab.setScaleX(scale);
+                    ((MainActivity) getContext()).fab.setScaleY(scale);
+                    if (scale < 0.2) ((MainActivity) getContext()).fab.setVisibility(View.GONE);
+                    else ((MainActivity) getContext()).fab.setVisibility(View.VISIBLE);
                 }
             });
         }

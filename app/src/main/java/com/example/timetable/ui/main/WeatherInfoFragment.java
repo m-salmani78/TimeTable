@@ -33,6 +33,7 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
 
     private LinearLayout weatherInfoLayout;
     private View progressBar, noConnection;
+    private TextView cityNameText;
     private ConnectivityListener connectivityListener;
     private Snackbar noConnectionSnackBar, connectingSnackBar;
 
@@ -51,6 +52,7 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
         progressBar = root.findViewById(R.id.progressBar);
         noConnection = root.findViewById(R.id.txt_no_connection);
         weatherInfoLayout = root.findViewById(R.id.weather_info);
+        cityNameText = root.findViewById(R.id.txt_city_name);
         requestFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +60,9 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
                 weatherInfoLayout.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 WeatherInfoApiService weatherInfoApiService = new WeatherInfoApiService(getContext());
-                weatherInfoApiService.getCurrentWeather(WeatherInfoFragment.this);
+                String str = cityNameText.getText().toString().trim();
+                if (str.length() < 2) str = "Yazd";
+                weatherInfoApiService.getCurrentWeather(WeatherInfoFragment.this, str, "Ir");
             }
         });
 
@@ -109,18 +113,18 @@ public class WeatherInfoFragment extends Fragment implements WeatherInfoApiServi
             ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-            noConnectionSnackBar = Snackbar.make(root, context.getResources().getString(R.string.no_connection), Snackbar.LENGTH_INDEFINITE);
-            connectingSnackBar = Snackbar.make(root, context.getResources().getString(R.string.connecting), Snackbar.LENGTH_INDEFINITE);
+            noConnectionSnackBar = Snackbar.make(root, context.getResources().getString(R.string.no_connection), Snackbar.LENGTH_SHORT);
+            connectingSnackBar = Snackbar.make(root, context.getResources().getString(R.string.connecting), Snackbar.LENGTH_SHORT);
 
             if (networkInfo == null) {
-                connectingSnackBar.dismiss();
+//                connectingSnackBar.dismiss();
                 noConnectionSnackBar.show();
             } else if (networkInfo.isAvailable()) {
-                noConnectionSnackBar.dismiss();
-                connectingSnackBar.dismiss();
+//                noConnectionSnackBar.dismiss();
+//                connectingSnackBar.dismiss();
                 Snackbar.make(root, context.getResources().getString(R.string.connected), Snackbar.LENGTH_SHORT).show();
             } else {
-                noConnectionSnackBar.dismiss();
+//                noConnectionSnackBar.dismiss();
                 connectingSnackBar.show();
             }
         }
