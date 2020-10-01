@@ -1,9 +1,11 @@
 package com.example.timetable.datamodel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.timetable.AuthorPageActivity;
+import com.example.timetable.R;
 
 public class AppFeature {
     public static final String KEY_IMAGE_URL = "image_url";
@@ -69,5 +71,6 @@ public class AppFeature {
         intent.putExtra(KEY_IMAGE_ID, getId());
         intent.putExtra(KEY_AUTHOR_NAME, title);
         context.startActivity(intent);
+        ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.fragment_close_exit);
     }
 }

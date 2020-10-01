@@ -3,6 +3,7 @@ package com.example.timetable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.widget.TimePicker;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -30,7 +32,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     public static final String TIME_DURATION = "time duration";
     public static final String COMMENT_TEXT = "comment";
     EditText beginningTime, timeDuration, subject, comment;
-    Button confirm_btn;
+    TextView confirm_btn;
     Calendar now;
     TextView remaining_words_txt;
     int hourBegin, minuteBegin;
@@ -39,6 +41,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        Slidr.attach(this);
         subject = findViewById(R.id.subject_ed_txt);
         comment = findViewById(R.id.comment_ed_txt);
         beginningTime = findViewById(R.id.beginning_time);
@@ -48,6 +51,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
 
         //actionbar
+        Toolbar toolbar = findViewById(R.id.add_activity_toolbar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -125,6 +130,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
                     intent.putExtra(COMMENT_TEXT, comment.getText().toString().trim());
                     setResult(RESULT_OK, intent);
                     finish();
+                    overridePendingTransition(R.anim.fragment_open_enter, R.anim.slide_out_right);
                 } catch (RuntimeException e) {
                     warning();
                     break;
@@ -150,6 +156,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     @Override
     public boolean onSupportNavigateUp() {
         finish();
+        overridePendingTransition(R.anim.fragment_open_enter, R.anim.slide_out_right);
         return true;
     }
 }

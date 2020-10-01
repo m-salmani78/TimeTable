@@ -1,17 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
+    android:background="@color/background_material_light"
     tools:context=".AddActivity">
 
-
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/add_activity_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/confirm_btn"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/small_margin">
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/add_activity_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize" />
+
+            <TextView
+                android:id="@+id/confirm_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/confirm"
+                android:drawablePadding="@dimen/small_margin"
+                android:gravity="center"
+                android:layout_margin="@dimen/small_margin"
+                android:textSize="@dimen/large_font_size"
+                android:textColor="@android:color/white"
+                android:foreground="?attr/selectableItemBackground"
+                app:drawableEndCompat="@drawable/ic_round_done_24" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -55,9 +87,9 @@
                     android:focusable="false"
                     android:gravity="center"
                     android:hint="@string/zero_time"
-                    android:textSize="@dimen/normal_font_size"
+                    android:importantForAutofill="no"
                     android:inputType="time"
-                    android:importantForAutofill="no" />
+                    android:textSize="@dimen/normal_font_size" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,10 +114,10 @@
                     android:ems="4"
                     android:gravity="center"
                     android:hint="@string/duration_zero"
+                    android:importantForAutofill="no"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:textSize="@dimen/normal_font_size"
-                    android:importantForAutofill="no" />
+                    android:textSize="@dimen/normal_font_size" />
             </LinearLayout>
 
             <LinearLayout
@@ -110,9 +142,9 @@
                     android:focusable="false"
                     android:gravity="center"
                     android:hint="--/--/--"
-                    android:textSize="@dimen/normal_font_size"
+                    android:importantForAutofill="no"
                     android:inputType="date"
-                    android:importantForAutofill="no" />
+                    android:textSize="@dimen/normal_font_size" />
             </LinearLayout>
 
             <EditText
@@ -126,9 +158,9 @@
                 android:gravity="start"
                 android:hint="@string/comment"
                 android:inputType="textMultiLine"
-                android:minLines="3"
+                android:maxLength="100"
                 android:maxLines="5"
-                android:maxLength="100" />
+                android:minLines="3" />
 
             <TextView
                 android:id="@+id/remaining_words"
@@ -140,15 +172,5 @@
                 android:textSize="12sp" />
 
         </LinearLayout>
-    </ScrollView>
-
-    <Button
-        android:id="@+id/confirm_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="@string/confirm"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/large_font_size" />
-</RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

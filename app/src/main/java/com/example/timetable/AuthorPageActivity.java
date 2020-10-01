@@ -10,6 +10,7 @@ import com.example.timetable.datamodel.AppFeature;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.r0adkll.slidr.Slidr;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,10 +28,11 @@ public class AuthorPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_author_page);
+        Slidr.attach(this);
         Intent intent = getIntent();
 
         //toolbar
-        setContentView(R.layout.activity_author_page);
         Toolbar toolbar = findViewById(R.id.author_page_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -83,6 +85,7 @@ public class AuthorPageActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         finish();
+        overridePendingTransition(R.anim.fragment_open_enter, R.anim.slide_out_right);
         return true;
     }
 }
